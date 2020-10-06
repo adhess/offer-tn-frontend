@@ -5,12 +5,10 @@ import logo from '../../../assets/images/logo.png'
 import Box from '@material-ui/core/Box';
 import {
     FormControl,
-    FormHelperText,
     InputAdornment,
     InputLabel,
     MenuItem,
     OutlinedInput, Select,
-    TextField
 } from "@material-ui/core";
 
 
@@ -45,6 +43,7 @@ class Nav extends Component {
                         </Select>
                     </FormControl>
                 </div>
+                <div style={{width: '131px'}}/>
             </Box>
         );
     }
