@@ -5,7 +5,7 @@ import {
 
 class Categories extends Component {
     state = {checked: false, selectedCategory: ''};
-    categories = [
+    dataCategories = [
         {
             name: "Telephonie & Tablette", children: [
                 {
@@ -185,9 +185,10 @@ class Categories extends Component {
         const checked = this.state.checked;
 
         const selectCategory = (name: string) => {
-            const find = this.categories.find(o => o.name === name);
-            this.subCategory = find ? find.children.map((elt: any) => <div style={{margin: '10px'}}>
+            const find = this.dataCategories.find(o => o.name === name);
+            this.subCategory = find ? find.children.map((elt: any) => <div style={{marginRight: '4em'}}>
                 <h4 style={{color: '#ffffff',}}>{elt.name}</h4>
+                {/*subSubCategory*/}
                 <ul style={{marginLeft: '-20px', marginTop: '-20px', color: '#ffffff',}}>
                     {elt.children.map((e: any) => <li>{e.name}</li>)}
                 </ul>
@@ -200,7 +201,7 @@ class Categories extends Component {
         };
 
         const categories = (
-            this.categories.map(category => (
+            this.dataCategories.map(category => (
                 <Button style={{
                     textShadow: "0px 1px 0px " + this.state.selectedCategory === category.name ? "#666666": undefined,
                     fontWeight: 600,
@@ -211,7 +212,7 @@ class Categories extends Component {
             ))
         );
         return (
-            <div style={{margin: 'auto', width: 'calc(100% - 600px)'}}>
+            <div style={{width: '100%'}}>
 
                 <div style={{
                     width: 'fit-content',
@@ -228,7 +229,7 @@ class Categories extends Component {
                     <div style={{
                         display: 'flex', flexDirection: 'row', flexFlow: 'wrap', textShadow: "0px 1px 0px #666666",
                         borderRadius: '5px', backgroundImage: "linear-gradient(180deg,#0d8dc7,#0d8dc7 24%,#3fb8b9)",
-                        justifyContent: "space-around"
+                        paddingLeft: '2em'
                     }}>
                         {
                             this.subCategory
