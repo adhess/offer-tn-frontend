@@ -212,7 +212,7 @@ class Categories extends Component {
             ))
         );
         return (
-            <div style={{width: '100%'}}>
+            <div style={{width: '100%', marginTop: '74px'}}>
 
                 <div style={{
                     width: 'fit-content',

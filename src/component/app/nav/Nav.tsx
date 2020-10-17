@@ -15,7 +15,7 @@ import {
 class Nav extends Component {
     render() {
         return (
-            <Box borderBottom="1px solid #eeeeee" minHeight={70} display='flex' flexDirection='row'>
+            <Box borderBottom="1px solid #eeeeee" width='100%' minHeight={70} display='flex' flexDirection='row' style={{position: 'fixed', background: '#FFF', zIndex: 999}}>
                 <img src={logo} alt="logo" height="35px" style={{margin: 'auto 0 auto 16px'}}/>
 
                 <div style={{margin: "auto", width: 'fit-content', display: 'flex', flexDirection: 'row'}}>

@@ -10,14 +10,25 @@ function App() {
         <>
             <Nav></Nav>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
-                <div style={{width: '350px', border: '1px solid red', height: window.innerHeight - 74}}>ads</div>
 
-                <div style={{width: '100%', margin: '0 1em'}}>
+                <div style={{width: 'calc(100% - 390px)', margin: '0 1em'}}>
                     <Categories/>
                     <HomeProducts/>
                 </div>
 
-                <div style={{width: '350px', border: '1px solid red', height: window.innerHeight - 74}}>ads</div>
+                <div style={{
+                    top: '70px',
+                    right: '0',
+                    width: '350px',
+                    border: '2px solid #EEE',
+                    borderRadius: '4px',
+                    height: window.innerHeight - 74,
+                    textAlign: 'center',
+                    position: 'fixed',
+                    fontSize: '70px',
+                    color: '#888',
+                    background: '#EEE'
+                }}>&#9785;</div>
             </div>
         </>
     );

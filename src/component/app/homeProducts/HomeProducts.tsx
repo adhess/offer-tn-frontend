@@ -246,14 +246,18 @@ class HomeProducts extends Component {
 
     private getCharacteristics(o: any) {
         const data = [];
-        for (const key in o) {
             data.push(
                 <div style={{display: 'flex', flexDirection: 'row', height: 'fit-content',  color: 'white', padding: '4px'}}>
-                    <div style={{width: '120px', fontWeight: 'bold'}}>{key}</div>
-                    <div style={{width: '100%'}}>: {o[key]}</div>
+                    <div style={{width: '120px', fontWeight: 'bold'}}>Name</div>
+                    <div style={{width: '100%'}}>: {o['Name']}</div>
                 </div>
             );
-        }
+            data.push(
+                <div style={{display: 'flex', flexDirection: 'row', height: 'fit-content',  color: 'white', padding: '4px'}}>
+                    <div style={{width: '120px', fontWeight: 'bold'}}>Price</div>
+                    <div style={{width: '100%'}}>: {o['price']}</div>
+                </div>
+            );
         return data;
     }
 }
