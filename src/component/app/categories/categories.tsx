@@ -3,6 +3,8 @@ import {
     Collapse, Button
 } from "@material-ui/core";
 
+const axios = require('axios').default;
+
 class Categories extends Component {
     state = {checked: false, selectedCategory: ''};
     dataCategories = [
@@ -180,6 +182,16 @@ class Categories extends Component {
         },
     ];
     subCategory: any;
+
+
+    componentDidMount() {
+        axios.get('api/categories')
+            .then((res: any) =>  {
+                // handle success
+                console.log(res);
+            })
+            .catch(console.log);
+    }
 
     render() {
         const checked = this.state.checked;
