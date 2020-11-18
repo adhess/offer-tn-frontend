@@ -1,0 +1,56 @@
+.pointer:hover {
+    cursor: pointer;
+    color: #E0E0E0;
+    text-shadow: 0 1px 0 #796992;
+}
+
+.categoriesContainer {
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: center;
+}
+
+.collapseContainer {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    text-shadow: 0 1px 0 #666666;
+    border-radius: 5px;
+    background-image: linear-gradient(180deg, #0d8dc7, #0d8dc7 24%, #3fb8b9);
+    padding-left: 2em;
+}
+
+.subCategory {
+    color: white;
+}
+
+@media only screen and (max-width: 549px) {
+    .subCategory {
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 550px) and (max-width: 799px) {
+    .subCategory {
+        width: 47%;
+    }
+}
+@media only screen and (min-width: 800px) and (max-width: 1099px) {
+    .subCategory {
+        width: 32%;
+    }
+}
+@media only screen and (min-width: 1100px) and (max-width: 1499px) {
+    .subCategory {
+        width: 24%;
+    }
+}
+@media only screen and (min-width: 1500px) {
+    .subCategory {
+        width: 19%;
+    }
+}

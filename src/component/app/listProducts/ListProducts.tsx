@@ -1,0 +1,55 @@
+import styles from './ListProducts.module.css';
+import {Component} from "react";
+import React from 'react';
+import Product from "./product/Product";
+import ProductType from "../../../values/types";
+import axios from "axios";
+import {connect} from "react-redux";
+
+class ListProducts extends Component<any, any> {
+    state = {products: undefined};
+
+    componentDidMount() {
+        console.log('ListProducts', this.props);
+        this.getProducts();
+    }
+
+    componentDidUpdate(prevProps: any) {
+        console.log('List products prev props', this.props.location, prevProps.location);
+        if (this.props.location !== prevProps.location) {
+            this.getProducts();
+        }
+    }
+
+    render() {
+        return (
+            <div className={styles.container}>
+                {
+                    (this.state.products || []).map(
+                        (product: ProductType) => <Product data={product} key={product.id}/>)
+                }
+            </div>
+        );
+    }
+
+    private getProducts() {
+        this.props.add_async_action();
+        const category_id = this.props?.match?.params?.category_id;
+        // home -> get products by popularity
+        // otherwise -> get products by url_params.category_id
+        const url = '/api/products/' + (category_id ? '?category_id=' + category_id : '');
+        axios.get(url).then(res => {
+            this.setState({products: res.data.results});
+            this.props.sub_async_action();
+        });
+    }
+}
+
+const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
+    return {
+        add_async_action: () => dispatch({type: 'ADD_ASYNC_ACTION'}),
+        sub_async_action: () => dispatch({type: 'SUB_ASYNC_ACTION'}),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ListProducts);
