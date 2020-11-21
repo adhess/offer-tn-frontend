@@ -68,6 +68,7 @@
 .image {
     max-width: 230px;
     max-height: 230px;
+    border-radius: 6px;
 }
 
 
