@@ -24,6 +24,52 @@
     background-image: linear-gradient(180deg, #0d8dc7, #0d8dc7 24%, #3fb8b9);
     padding-left: 2em;
 }
+.categoryContainer{
+    width: 120px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--dark);
+    text-decoration: none;
+}
+
+.categoryContainer:hover{
+    color: var(--gray);
+}
+
+.category {
+    margin: 0.5em auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid rgba(165, 215, 250, .8);
+
+    /*background-image: linear-gradient(180deg, #a2d2ff, #bde0fe 24%, #ffafcc);*/
+    background-color: #bde0fe;
+    /*background-color: var(--cherry2);*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .3);
+
+}
+
+.categoryContainer:hover .category {
+    box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .6);
+}
+
+.category>svg, .category>i {
+    width: 35px !important;
+    height: 35px !important;
+    /*color: antiquewhite;*/
+    font-size: 35px;
+}
+
+.categoryContainer:hover svg,.categoryContainer:hover i {
+    align-self: auto;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding:25%;
+}
 
 .subCategory {
     color: white;

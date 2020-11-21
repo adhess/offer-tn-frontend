@@ -15,8 +15,8 @@ class ListProducts extends Component<any, any> {
     }
 
     componentDidUpdate(prevProps: any) {
-        console.log('List products prev props', this.props.location, prevProps.location);
-        if (this.props.location !== prevProps.location) {
+        console.log('List products prev props', this.props.match.url, prevProps.match.url);
+        if (this.props.match.url !== prevProps.match.url) {
             this.getProducts();
         }
     }
@@ -41,7 +41,7 @@ class ListProducts extends Component<any, any> {
         axios.get(url).then(res => {
             this.setState({products: res.data.results});
             this.props.sub_async_action();
-        });
+        }).catch(this.props.sub_async_action);
     }
 }
 

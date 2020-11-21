@@ -18,7 +18,7 @@ interface ProductType {
         "inventory_state": string,
         "product": number
     }[];
-    one_image: {src: string};
+    image_url: string;
     name: string;
     ref: string;
     characteristics: {

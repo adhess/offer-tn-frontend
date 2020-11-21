@@ -15,8 +15,8 @@ class App extends React.Component {
                 <Nav/>
                 <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
                     <div style={{width: '100%', margin: '0 1em'}}>
-                        <Adds/>
                         <Categories/>
+                        <Adds/>
                         <Route path={['/product/list/:category/:category_id', '/']} exact component={ListProducts}/>
                         <Route path='/product/details/:product_id' exact component={DetailsProduct}/>
                     </div>

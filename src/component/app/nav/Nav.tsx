@@ -25,12 +25,14 @@ class Nav extends Component<any, any> {
                 height: 'fit-content',
                 top: 0,
                 position: 'fixed',
-                background: '#FFF',
-                zIndex: 999
+                background: '#bde0fe',
+                zIndex: 999,
+                // backgroundImage: 'linear-gradient(180deg, #bde0fe,  #a2d2ff)'
+
             }}>
                 <Box
                     // borderBottom="1px solid #eeeeee"
-                    style={{borderBottom: "1px solid #E0E0E0"}}
+                    style={{borderBottom: "2px solid rgba(165, 215, 250, .8)"}}
 
                     width='100%' minHeight={70} display='flex' flexDirection='row' className='shadow'>
                     <NavLink to='/'>
@@ -39,7 +41,7 @@ class Nav extends Component<any, any> {
                     <div style={{margin: "auto", width: 'fit-content', display: 'flex', flexDirection: 'row'}}>
                         <FormControl variant="outlined" style={{width: '500px'}}>
                             <InputLabel htmlFor="search-product">Search for anything</InputLabel>
-                            <OutlinedInput
+                            <OutlinedInput  style={{backgroundColor: 'white'}}
                                 id="search-product"
                                 type='text'
                                 endAdornment={

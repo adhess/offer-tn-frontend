@@ -10,6 +10,7 @@
     text-align: left;
     transition: all .2s;
     top: 0;
+    text-decoration: none;
 }
 
 .item:hover {
@@ -55,10 +56,20 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
-.image {
+.image_container {
+    width: 230px;
+    height: 230px;
     border-radius: 6px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
+.image {
+    max-width: 230px;
+    max-height: 230px;
+}
+
 
 
 

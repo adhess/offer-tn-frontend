@@ -25,18 +25,20 @@ class Product extends React.Component<IProductProps, any> {
 
     render() {
         return (
-            <NavLink to='/product/details/1'  className={['shadow', styles.item].join(' ')} style={{textDecoration: "none"}}>
-                    <img src={this.state.data.one_image.src} width='230px' height='230px' className={styles.image}/>
-                    <h4 className={styles.productName}>{this.state.data.name}</h4>
-                    <div className='row'>
-                        <h4 className={styles.price}>
-                            {Math.min(...this.state.data.details.map(detail => detail.unit_price), Infinity)} TND
-                        </h4>
-                        <h4 className={styles.popularity}>
-                            <FavoriteBorderIcon className={styles.favorite}/>
-                            <p style={{margin: '2px'}}>{this.state.data.popularity}</p>
-                        </h4>
-                    </div>
+            <NavLink to='/product/details/1' className={['shadow', styles.item].join(' ')}>
+                <div className={styles.image_container}>
+                    <img src={this.state.data.image_url} className={styles.image}/>
+                </div>
+                <h4 className={styles.productName}>{this.state.data.name}</h4>
+                <div className='row'>
+                    <h4 className={styles.price}>
+                        {Math.min(...this.state.data.details.map(detail => detail.unit_price), Infinity)} TND
+                    </h4>
+                    <h4 className={styles.popularity}>
+                        <FavoriteBorderIcon className={styles.favorite}/>
+                        <p style={{margin: '2px'}}>{this.state.data.popularity}</p>
+                    </h4>
+                </div>
             </NavLink>
         )
     }
