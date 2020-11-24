@@ -1,0 +1,125 @@
+.randomProduct {
+  text-decoration: none;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: 1em auto;
+}
+
+.productContainer {
+  width: fit-content;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  margin-right: 1em;
+  div > img {
+    border-radius: 6px;
+    width: 400px;
+    /*max-height: 600px;*/
+  }
+}
+
+.imageContainer {
+  border-radius: 6px;
+  border: 1px solid #eaeaea;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+
+.dataSheetContainer {
+  width: 100%;
+  margin-right: 1em;
+
+  div > ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 1em;
+    margin: 0;
+    border-radius: 6px;
+    border: 1px solid #eaeaea;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      white-space: nowrap;
+      margin-bottom: 0.2em;
+
+      h4 {
+        width: 30% !important;
+      }
+
+      p, h4 {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.vendor {
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center space-between;
+  align-items: center;
+  width: 600px;
+  margin-bottom: 1em;
+  border-radius: 6px;
+  height: 50px;
+  border: 1px solid #eaeaea;
+  padding: 1em;
+
+}
+
+.vendor > img {
+  max-width: 100px;
+}
+
+.details {
+  //border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 1550px) {
+  .productContainer {
+    flex-direction: column-reverse;
+    display: block;
+    .dataSheetContainer {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 1550px) {
+  .details {
+    .dataSheetContainer {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .container {
+    flex-direction: column;
+  }
+  .productContainer {
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .vendor, .dataSheetContainer {
+    width: 100%;
+  }
+  .productContainer {
+    margin: 0 auto;
+  }
+}

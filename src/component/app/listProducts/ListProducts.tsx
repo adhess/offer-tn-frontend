@@ -10,12 +10,10 @@ class ListProducts extends Component<any, any> {
     state = {products: undefined};
 
     componentDidMount() {
-        console.log('ListProducts', this.props);
         this.getProducts();
     }
 
     componentDidUpdate(prevProps: any) {
-        console.log('List products prev props', this.props.match.url, prevProps.match.url);
         if (this.props.match.url !== prevProps.match.url) {
             this.getProducts();
         }

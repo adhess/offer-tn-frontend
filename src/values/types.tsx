@@ -1,5 +1,3 @@
-
-
 interface ProductType {
     id: number;
     details: {
@@ -10,25 +8,18 @@ interface ProductType {
             "website": string,
             "logo_url": string
         },
-        "images": {"src": string}[],
         "url": string,
         "unit_price": number,
         "discount_available": boolean,
         "warranty": string,
         "inventory_state": string,
-        "product": number
+        "product": number,
+        "min_registered_prices": { "data": number[] };
     }[];
     image_url: string;
     name: string;
     ref: string;
-    characteristics: {
-        "OS": string,
-        "RAM": string,
-        "color": string,
-        "Screen": string,
-        "Processor": string,
-        "Graphic card": string
-    },
+    characteristics: any;
     popularity: number;
     category: number;
 }

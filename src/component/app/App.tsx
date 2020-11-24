@@ -5,7 +5,7 @@ import Adds from "./adds/adds";
 import Categories from "./categories/categories";
 import ListProducts from "./listProducts/ListProducts";
 import {BrowserRouter, Route} from 'react-router-dom';
-import DetailsProduct from "./listProducts/detailsProduct/detailsProduct";
+import DetailsProduct from "./listProducts/detailsProduct/productDetails";
 
 
 class App extends React.Component {
@@ -14,9 +14,9 @@ class App extends React.Component {
             <BrowserRouter>
                 <Nav/>
                 <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
-                    <div style={{width: '100%', margin: '0 1em'}}>
+                    <div className='app-container'>
                         <Categories/>
-                        <Adds/>
+                        {/*<Adds/>*/}
                         <Route path={['/product/list/:category/:category_id', '/']} exact component={ListProducts}/>
                         <Route path='/product/details/:product_id' exact component={DetailsProduct}/>
                     </div>
