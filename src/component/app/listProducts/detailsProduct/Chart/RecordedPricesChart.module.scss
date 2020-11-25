@@ -1,4 +1,9 @@
 .border {
   border-radius: 6px;
   border: 1px solid #eaeaea;
+  width: 600px;
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+  }
 }
+

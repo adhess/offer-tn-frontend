@@ -32,48 +32,35 @@ class ProductDetails extends React.Component<any, any> {
             display: 'flex',
             flexDirection: 'column',
         }}>
-            <NavLink to={'/product/details/' + (Math.floor(Math.random() * 180 + 1))} className={styles.randomProduct}>
-                <Button variant={"outlined"}>Take Me To A Random Product</Button>
-            </NavLink>
             <div className={styles.container}>
                 <div className={styles.productContainer}>
-                    <div className={styles.dataSheetContainer}>
-                        <h4>Data Sheet</h4>
-                        <div className={'shadow'}>
-                            <ul>
-                                {
-                                    this.getCharacteristics()
-                                }
-                            </ul>
-                        </div>
-                    </div>
-
+                    <h4>{this.state.product?.name}</h4>
                     <div className={['shadow', styles.imageContainer].join(' ')}>
                         <img src={this.state.product?.image_url}/>
                     </div>
                 </div>
                 <div className={styles.details}>
+                    <h4>Data Sheet</h4>
+                    <div className={['shadow', styles.dataSheetContainer].join(' ')}>
+                        <ul>
+                            {
+                                this.getCharacteristics()
+                            }
+                        </ul>
+                    </div>
+
                     <h4>Recorded Prices</h4>
                     {this.state?.series ? <RecordedPricesChart series={this.state.series}/> : null}
                     <h4>Vendors</h4>
                     {this.state.product?.details.map(detail =>
-                        <div className={['shadow', styles.vendor].join(' ')}>
+                        <div className={['shadow', styles.vendor].join(' ')}
+                             onClick={() => window.open(detail.url, "_blank")}>
                             <img src={detail.vendor.logo_url}/>
                             <div>{detail.warranty} of warranty</div>
                             <div>{this.productState(detail.inventory_state)}</div>
-                            <div className={css.price}>{detail.unit_price} TND</div>
+                            <h4 className={css.price}>{detail.unit_price} TND</h4>
                         </div>
                     )}
-                    <div className={styles.dataSheetContainer}>
-                        <h4>Data Sheet</h4>
-                        <div className={'shadow'}>
-                            <ul>
-                                {
-                                    this.getCharacteristics()
-                                }
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>);

@@ -1,3 +1,6 @@
+.productContainer>h4, .dataSheetContainer>h4, .details>h4  {
+  margin: 16px 0 8px 5px;
+}
 .randomProduct {
   text-decoration: none;
   width: fit-content;
@@ -14,7 +17,7 @@
   width: fit-content;
   display: flex;
   align-items: flex-start;
-  flex-direction: row;
+  flex-direction: column;
   margin-right: 1em;
   div > img {
     border-radius: 6px;
@@ -36,7 +39,7 @@
   width: 600px;
   margin-right: 1em;
 
-  div > ul {
+  ul {
     display: flex;
     flex-direction: column;
     list-style-type: none;
@@ -72,12 +75,14 @@
   place-content: center space-between;
   align-items: center;
   width: 600px;
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
   border-radius: 6px;
   height: 50px;
   border: 1px solid #eaeaea;
   padding: 1em;
-  div, img {
+  transition: all .4s;
+  position: relative;
+  div, img, h4 {
     width: 25%;
     @media only screen and (max-width: 650px) {
       width: 45%;
@@ -91,6 +96,11 @@
 .vendor > img {
   max-width: 100px;
 }
+.vendor:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .4);
+  cursor: pointer;
+  top: -1px
+}
 
 .details {
   //border: 1px solid blue;
@@ -102,17 +112,6 @@
   .productContainer {
     flex-direction: column-reverse;
     display: block;
-    .dataSheetContainer {
-      display: none;
-    }
-  }
-}
-
-@media only screen and (min-width: 1700px) {
-  .details {
-    .dataSheetContainer {
-      display: none;
-    }
   }
 }
 
