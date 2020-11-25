@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  top: 0;
+  position: fixed;
+  background: #bde0fe;
+  z-index: 999;
+}
+
+.box {
+  border-bottom: 2px solid rgba(165, 215, 250, .8);
+  width: 100%;
+  min-height: 55px;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchText {
+  border-radius: 6px;
+  background-color: white;
+  margin: auto !important;
+  width: 432px;
+  height: 40px;
+}
+
+
+.logo {
+  height:35px;
+  margin: 10px 0 auto 10px;
+}
