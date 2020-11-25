@@ -33,7 +33,7 @@
 
 
 .dataSheetContainer {
-  width: 100%;
+  width: 600px;
   margin-right: 1em;
 
   div > ul {
@@ -50,6 +50,7 @@
       flex-direction: row;
       align-items: center;
       white-space: nowrap;
+      overflow: hidden;
       margin-bottom: 0.2em;
 
       h4 {
@@ -65,6 +66,7 @@
 
 .vendor {
   flex-direction: row;
+  flex-flow: wrap;
   box-sizing: border-box;
   display: flex;
   place-content: center space-between;
@@ -75,7 +77,15 @@
   height: 50px;
   border: 1px solid #eaeaea;
   padding: 1em;
-
+  div, img {
+    width: 25%;
+    @media only screen and (max-width: 650px) {
+      width: 45%;
+    }
+  }
+  @media only screen and (max-width: 650px) {
+    height: 100px;
+  }
 }
 
 .vendor > img {
@@ -88,7 +98,7 @@
   flex-direction: column;
 }
 
-@media only screen and (max-width: 1550px) {
+@media only screen and (max-width: 1700px) {
   .productContainer {
     flex-direction: column-reverse;
     display: block;
@@ -98,7 +108,7 @@
   }
 }
 
-@media only screen and (min-width: 1550px) {
+@media only screen and (min-width: 1700px) {
   .details {
     .dataSheetContainer {
       display: none;
@@ -116,10 +126,14 @@
 }
 
 @media only screen and (max-width: 650px) {
-  .vendor, .dataSheetContainer {
+  .vendor, .dataSheetContainer, .container {
     width: 100%;
   }
   .productContainer {
     margin: 0 auto;
+    width: 95%;
+    div > img {
+      width: 100%;
+    }
   }
 }

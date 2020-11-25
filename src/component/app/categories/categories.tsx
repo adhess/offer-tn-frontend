@@ -33,9 +33,9 @@ class Categories extends Component<any, any> {
         </>;
         return <div style={{
             width: '100%',
-            marginTop: '96px',
             display: 'flex',
             flexDirection: 'row',
+            flexFlow: 'wrap',
             alignContent: 'center',
             justifyContent: 'center'
         }}>
