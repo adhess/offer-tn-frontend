@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './product.module.scss';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ProductType from "../../../../values/types";
 import {NavLink} from "react-router-dom";
 

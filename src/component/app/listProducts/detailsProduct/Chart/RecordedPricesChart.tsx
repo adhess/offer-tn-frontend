@@ -11,7 +11,7 @@ export default class RecordedPricesChart extends React.Component<any, any> {
                 },
             },
             stroke: {
-                width: [Array(50).fill(3)],
+                width: Array(50).fill(3),
                 curve: 'straight',
             }
         }
