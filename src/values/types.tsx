@@ -14,7 +14,7 @@ interface ProductType {
         "warranty": string,
         "inventory_state": string,
         "product": number,
-        "min_registered_prices": { "data": number[] };
+        "registered_prices": { "data": number[] };
     }[];
     image_url: string;
     name: string;

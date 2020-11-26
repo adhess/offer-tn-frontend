@@ -10,11 +10,11 @@ import css from '../product/product.module.scss'
 
 class ProductDetails extends React.Component<any, any> {
     state: {
-        product: ProductType | undefined;
-        series: [] | undefined;
+        product?: ProductType;
+        series: [];
     } = {
         product: undefined,
-        series: undefined,
+        series: [],
     };
 
     componentDidMount() {
@@ -50,7 +50,7 @@ class ProductDetails extends React.Component<any, any> {
                     </div>
 
                     <h4>Recorded Prices</h4>
-                    {this.state?.series ? <RecordedPricesChart series={this.state.series}/> : null}
+                    {this.state?.series?.length > 0 ? <RecordedPricesChart series={this.state.series}/> : null}
                     <h4>Vendors</h4>
                     {this.state.product?.details.map(detail =>
                         <div className={['shadow', styles.vendor].join(' ')}
@@ -73,9 +73,9 @@ class ProductDetails extends React.Component<any, any> {
         axios.get(url).then(res => {
             this.setState({
                 product: res.data,
-                series: res.data?.details.map((detail: any) => {
-                    return {data: detail.min_registered_prices.data, name: detail.vendor.name}
-                })
+                series: res.data?.details.map(
+                    (detail: any) => ({data: detail.registered_prices.data, name: detail.vendor.name})
+                )
             });
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);
