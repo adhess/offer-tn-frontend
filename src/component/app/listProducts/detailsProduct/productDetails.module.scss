@@ -1,6 +1,9 @@
 .productContainer>h4, .dataSheetContainer>h4, .details>h4  {
   margin: 16px 0 8px 5px;
 }
+.productContainer>h4 {
+  width: 400px;
+}
 .randomProduct {
   text-decoration: none;
   width: fit-content;

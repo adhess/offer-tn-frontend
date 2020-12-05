@@ -9,12 +9,11 @@ interface ProductType {
             "logo_url": string
         },
         "url": string,
-        "unit_price": number,
         "discount_available": boolean,
         "warranty": string,
         "inventory_state": string,
         "product": number,
-        "registered_prices": { "data": number[] };
+        "registered_prices": number[];
     }[];
     image_url: string;
     name: string;
