@@ -1,0 +1,19 @@
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+}
+.checkboxContainer>div {
+  min-width: 80px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.checkboxContainer>div>h5 {
+  margin: 0;
+  font-weight: 400;
+}
+
+.container>h4 {
+  margin: 0;
+}

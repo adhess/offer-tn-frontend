@@ -6,6 +6,7 @@ import Categories from "./categories/categories";
 import ListProducts from "./listProducts/ListProducts";
 import {BrowserRouter, Route} from 'react-router-dom';
 import DetailsProduct from "./listProducts/detailsProduct/productDetails";
+import Filter from "./listProducts/filter/filter";
 
 
 class App extends React.Component {
@@ -17,7 +18,10 @@ class App extends React.Component {
                     <div className='app-container'>
                         <Categories/>
                         {/*<Adds/>*/}
-                        <Route path={['/product/list/:category/:category_id', '/']} exact component={ListProducts}/>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                            <Route path={['/product/list/:category/:category_id']} exact component={Filter}/>
+                            <Route path={['/product/list/:category/:category_id', '/']} exact component={ListProducts}/>
+                        </div>
                         <Route path='/product/details/:product_id' exact component={DetailsProduct}/>
                     </div>
                 </div>
