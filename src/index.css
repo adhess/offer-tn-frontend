@@ -5,6 +5,7 @@
   --cherry2: #fc5185;
   --lightgray: #eaeaea;
   --gray: #828282;
+  --nav: linear-gradient(135deg,#2ba7df, #007bff);
 }
 
 .row {

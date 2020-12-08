@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import axios from 'axios';
+import {Button} from "@material-ui/core";
 
 class Categories extends Component<any, any> {
     state = {
@@ -31,7 +32,7 @@ class Categories extends Component<any, any> {
             </div>
             <h4>{name}</h4>
         </>;
-        return <div style={{
+        return this.props.is_show_category ? <div style={{
             width: '100%',
             display: 'flex',
             flexDirection: 'row',
@@ -69,13 +70,14 @@ class Categories extends Component<any, any> {
                     <NavLink
                         to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
                         className={styles.categoryContainer}
+                        onClick={this.props.toggle_is_show_categories}
                         key={'all'}>
                         {categoryComponent('fas fa-globe', 'All')}
                     </NavLink>
                     : null
             }
 
-        </div>
+        </div>:null
     }
 
 
@@ -94,17 +96,24 @@ class Categories extends Component<any, any> {
                     ]
                 })
             );
-
-
+            // this.props.toggle_is_show_categories();
+        } else {
+            this.props.toggle_is_show_categories();
         }
     }
 }
 
+const mapStateToProp = (state: any) => {
+    return {
+        is_show_category: state.is_show_category
+    }
+}
 const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
     return {
         add_async_action: () => dispatch({type: 'ADD_ASYNC_ACTION'}),
         sub_async_action: () => dispatch({type: 'SUB_ASYNC_ACTION'}),
+        toggle_is_show_categories: () => dispatch({type: 'TOGGLE_SHOW_CATEGORY'}),
     }
 }
 
-export default connect(null, mapDispatchToProps)(Categories);
+export default connect(mapStateToProp, mapDispatchToProps)(Categories);

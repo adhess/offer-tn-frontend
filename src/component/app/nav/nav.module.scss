@@ -5,12 +5,12 @@
   height: fit-content;
   top: 0;
   position: fixed;
-  background: #bde0fe;
+  background: var(--nav);
   z-index: 999;
 }
 
 .box {
-  border-bottom: 2px solid rgba(165, 215, 250, .8);
+  //border-bottom: 2px solid rgba(var(--navBorder), 0.8);
   width: 100%;
   min-height: 55px;
   display: flex;
@@ -20,11 +20,22 @@
 .searchText {
   border-radius: 6px;
   background-color: white;
-  margin: auto !important;
   width: 432px;
   height: 40px;
 }
 
+.searchAction {
+  margin: auto !important;
+  .categoriesButton {
+    background: white;
+    margin: 8px 1em;
+    height: 40px;
+    border: 2px solid #eaeaea;
+  }
+  .categoriesButton:hover {
+    background: #eaeaea;
+  }
+}
 
 .logo {
   height:35px;
