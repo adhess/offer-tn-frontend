@@ -14,7 +14,7 @@ class ListProducts extends Component<any, any> {
     }
 
     componentDidUpdate(prevProps: any) {
-        if (this.props.match.url !== prevProps.match.url) {
+        if (this.props.match.url !== prevProps.match.url || this.props.location.search !== prevProps.location.search) {
             this.getProducts();
         }
     }
@@ -36,7 +36,13 @@ class ListProducts extends Component<any, any> {
         // home -> get products by popularity
         // otherwise -> get products by url_params.category_id
         const url = '/api/products/' + (category_id ? '?category_id=' + category_id : '');
-        axios.get(url).then(res => {
+        let filter = {};
+        let search = this.props.location?.search;
+        if (search?.startsWith('?filter=')) {
+            filter = JSON.parse(decodeURI(search?.substring(8)));
+            console.log(filter);
+        }
+        axios.get(url, {params: filter}).then(res => {
             this.setState({products: res.data.results});
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);

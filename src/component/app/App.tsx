@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
 import Nav from "./nav/Nav";
-import Adds from "./adds/adds";
 import Categories from "./categories/categories";
 import ListProducts from "./listProducts/ListProducts";
 import {BrowserRouter, Route} from 'react-router-dom';
-import DetailsProduct from "./listProducts/detailsProduct/productDetails";
+import DetailsProduct from "./listProducts/productDetails/productDetails";
 import Filter from "./listProducts/filter/filter";
 
 

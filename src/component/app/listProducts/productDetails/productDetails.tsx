@@ -3,8 +3,6 @@ import React from "react";
 import {connect} from "react-redux";
 import axios from "axios";
 import ProductType from "../../../../values/types";
-import {NavLink} from "react-router-dom";
-import {Button} from "@material-ui/core";
 import RecordedPricesChart from "./Chart/RecordedPricesChart";
 import css from '../product/product.module.scss'
 
@@ -36,7 +34,7 @@ class ProductDetails extends React.Component<any, any> {
                 <div className={styles.productContainer}>
                     <h4>{this.state.product?.name}</h4>
                     <div className={['shadow', styles.imageContainer].join(' ')}>
-                        <img src={this.state.product?.image_url}/>
+                        <img src={this.state.product?.image_url} alt=''/>
                     </div>
                 </div>
                 <div className={styles.details}>
@@ -55,7 +53,7 @@ class ProductDetails extends React.Component<any, any> {
                     {this.state.product?.details.map(detail =>
                         <div className={['shadow', styles.vendor].join(' ')}
                              onClick={() => window.open(detail.url, "_blank")}>
-                            <img src={detail.vendor.logo_url}/>
+                            <img src={detail.vendor.logo_url} alt=''/>
                             <div>{detail.warranty} of warranty</div>
                             <div>{this.productState(detail.inventory_state)}</div>
                             <h4 className={css.price}>{detail.unit_price} TND</h4>

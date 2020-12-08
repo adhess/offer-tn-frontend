@@ -15,7 +15,7 @@ class Nav extends Component<any, any> {
             <div className={styles.container}>
                 <Box className={['shadow',styles.box].join(' ')}>
                     <NavLink to='/'>
-                        <img className={styles.logo} src={logo}/>
+                        <img className={styles.logo} src={logo} alt=''/>
                     </NavLink>
                     <TextField
                         label="Search for anything"

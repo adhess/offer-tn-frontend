@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import styles from './filter.module.scss';
-import Property from "./property/property";
+import Choices from "./choices/choices";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 
-class Filter extends Component {
+class Filter extends Component<any, any> {
     state = {
         characteristics: [
             {
@@ -46,10 +48,30 @@ class Filter extends Component {
     render() {
         return <div className={[styles.container, 'shadow'].join(' ')}>
             {
-                this.state.characteristics.map(property => <Property data={property}/>)
+                this.state.characteristics.map(choices => <Choices key={JSON.stringify(choices)} data={choices}/>)
             }
         </div>;
     }
+
+
+    componentDidMount() {
+        let search = this.props.location?.search;
+        if (Object.keys(this.props.activeFilter).length === 0 && search?.startsWith('?filter=')) {
+            const newFilter = JSON.parse(decodeURI(search?.substring(8)));
+            this.props.update_filter(newFilter);
+        }
+    }
 }
 
-export default Filter;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        update_filter: (newFilter: any) => dispatch({type: 'UPDATE_FILTER', newFilter: newFilter}),
+    }
+}
+
+const mapStateToProp = (state: any) => {
+    return {
+        activeFilter: state.activeFilter
+    }
+}
+export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Filter));

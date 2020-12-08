@@ -59,7 +59,10 @@ class Categories extends Component<any, any> {
                         <NavLink to={'/product/list/' + category.name + '/' + category.id}
                                  className={styles.categoryContainer}
                                  key={category.name}
-                                 onClick={() => this.onSelectCategory(category.name)}>
+                                 onClick={() => {
+                                     this.onSelectCategory(category.name);
+                                     this.props.update_filter({});
+                                 }}>
                             {categoryComponent(category.icon, category.name)}
                         </NavLink>
                 ))
@@ -69,6 +72,7 @@ class Categories extends Component<any, any> {
                     <NavLink
                         to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
                         className={styles.categoryContainer}
+                        onClick={() => this.props.update_filter({})}
                         key={'all'}>
                         {categoryComponent('fas fa-globe', 'All')}
                     </NavLink>
@@ -80,10 +84,8 @@ class Categories extends Component<any, any> {
 
 
     private onSelectCategory(name: any) {
-        console.log(this.state.stepCategories);
         const selectedCategory: any = this.state.stepCategories[this.state.stepCategories.length - 1]
             .find((category: any) => category.name === name);
-        console.log(selectedCategory);
         if (selectedCategory !== undefined && selectedCategory?.children?.length > 0) {
             this.setState((state: any) =>
                 ({
@@ -104,6 +106,7 @@ const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
     return {
         add_async_action: () => dispatch({type: 'ADD_ASYNC_ACTION'}),
         sub_async_action: () => dispatch({type: 'SUB_ASYNC_ACTION'}),
+        update_filter: (newFilter: any) => dispatch({type: 'UPDATE_FILTER', newFilter: newFilter}),
     }
 }
 

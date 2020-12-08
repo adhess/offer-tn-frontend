@@ -26,7 +26,7 @@ class Product extends React.Component<IProductProps, any> {
         return (
             <NavLink to={'/product/details/' + this.state.data.id} className={['shadow', styles.item].join(' ')}>
                 <div className={styles.image_container}>
-                    <img src={this.state.data.image_url} className={styles.image}/>
+                    <img src={this.state.data.image_url} className={styles.image} alt=''/>
                 </div>
                 <h4 className={styles.productName}>{this.state.data.name}</h4>
                 <div className='row'>
