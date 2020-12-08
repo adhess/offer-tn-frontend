@@ -1,5 +1,6 @@
 const initialState = {
     async_counter: 0,
+    is_show_category: false,
     activeFilter: {}
 }
 const reducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 activeFilter: action.newFilter
+            }
+        case 'TOGGLE_SHOW_CATEGORY':
+            return {
+                ...state,
+                is_show_category: !state.is_show_category
             }
         default:
             return state;

@@ -33,43 +33,41 @@
 }
 
 .categoryContainer:hover{
-    color: var(--gray);
-
+    /*color: var(--gray);*/
 }
 
 .category {
     margin: 0.5em auto;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: 2px solid rgba(165, 215, 250, .8);
+    /*border: 2px solid rgba(var(--navBorder), 0.8);*/
 
     /*background-image: linear-gradient(180deg, #a2d2ff, #bde0fe 24%, #ffafcc);*/
-    background-color: #bde0fe;
-    /*background-color: var(--cherry2);*/
+    background: var(--nav);
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .3);
+    /*box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .3);*/
 
 }
 
 .categoryContainer:hover .category {
-    box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .6);
+    /*box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .6);*/
 }
 
 .category>svg, .category>i {
-    width: 35px !important;
-    height: 35px !important;
-    /*color: antiquewhite;*/
-    font-size: 35px;
+    width: 30px !important;
+    height: 30px !important;
+    color: white;
+    font-size: 30px;
 }
 
-.categoryContainer:hover svg,.categoryContainer:hover i {
+.categoryContainer:hover i {
     align-self: auto;
     border: 2px solid white;
     border-radius: 50%;
-    padding:25%;
+    padding:15%;
 }
 
 .subCategory {

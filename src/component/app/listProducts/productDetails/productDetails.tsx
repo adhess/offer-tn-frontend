@@ -56,7 +56,7 @@ class ProductDetails extends React.Component<any, any> {
                             <img src={detail.vendor.logo_url} alt=''/>
                             <div>{detail.warranty} of warranty</div>
                             <div>{this.productState(detail.inventory_state)}</div>
-                            <h4 className={css.price}>{detail.unit_price} TND</h4>
+                            <h4 className={css.price}>{detail.registered_prices.slice(-1)[0]} TND</h4>
                         </div>
                     )}
                 </div>
@@ -72,7 +72,7 @@ class ProductDetails extends React.Component<any, any> {
             this.setState({
                 product: res.data,
                 series: res.data?.details.map(
-                    (detail: any) => ({data: detail.registered_prices.data, name: detail.vendor.name})
+                    (detail: any) => ({data: detail.registered_prices, name: detail.vendor.name})
                 )
             });
             this.props.sub_async_action();
@@ -83,6 +83,7 @@ class ProductDetails extends React.Component<any, any> {
         const ans = [];
         if (this.state?.product?.characteristics !== undefined)
             for (let key of Object.keys(this.state.product?.characteristics)) {
+                if (this.state.product?.characteristics[key])
                 ans.push(
                     <li key={key}>
                         <h4>{key}</h4><p>:{this.state.product?.characteristics[key]}</p>

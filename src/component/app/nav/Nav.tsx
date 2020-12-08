@@ -8,40 +8,46 @@ import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import styles from "./nav.module.scss";
+import {Button} from "@material-ui/core";
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
 
 class Nav extends Component<any, any> {
     render() {
         return (
             <div className={styles.container}>
-                <Box className={['shadow',styles.box].join(' ')}>
+                <Box className={[styles.box].join(' ')}>
                     <NavLink to='/'>
                         <img className={styles.logo} src={logo} alt=''/>
                     </NavLink>
-                    <TextField
-                        label="Search for anything"
-                        margin="dense"
-                        variant="outlined"
-                        className={styles.searchText}
-                        InputProps={{
-                            style: {
-                                height: '40px',
-                                padding: '0 14px',
-                            },
-                            endAdornment: (
-                                    <IconButton>
-                                        <SearchIcon />
-                                    </IconButton>
-                            )
-                        }}
-                    />
 
-                    {/*<FormControl variant="outlined" style={{width: '150px', marginLeft: '10px'}}>*/}
-                    {/*    <InputLabel id="id-select-categories">All categories</InputLabel>*/}
-                    {/*    <Select labelId="id-select-categories" id="id-select-categories" labelWidth={100}>*/}
-                    {/*        <MenuItem value="cell_phones">Cell phones & accessories</MenuItem>*/}
-                    {/*        <MenuItem value="computers">Computers</MenuItem>*/}
-                    {/*    </Select>*/}
-                    {/*</FormControl>*/}
+                    <div className={styles.searchAction}>
+                        <TextField
+                            label="Search for anything"
+                            margin="dense"
+                            variant="outlined"
+                            className={styles.searchText}
+                            InputProps={{
+                                style: {
+                                    height: '40px',
+                                    padding: '0 14px',
+                                },
+                                endAdornment: (
+                                    <IconButton>
+                                        <SearchIcon/>
+                                    </IconButton>
+                                )
+                            }}
+                        />
+                        <Button variant="outlined" color="inherit" className={styles.categoriesButton}
+                                onClick={this.props.toggle_is_show_categories}
+                                endIcon={this.props.is_show_category ? <KeyboardArrowUpIcon/> :
+                                    <KeyboardArrowDownIcon/>}>
+                            Categories
+                        </Button>
+                    </div>
+
                     <div style={{width: '131px'}}/>
                 </Box>
                 {
@@ -52,9 +58,16 @@ class Nav extends Component<any, any> {
     }
 }
 
-const mapStateToProp = (state: { async_counter: number }) => {
+const mapStateToProp = (state: any) => {
     return {
-        async_counter: state.async_counter
+        async_counter: state.async_counter,
+        is_show_category: state.is_show_category
     }
 }
-export default connect(mapStateToProp)(Nav);
+
+const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
+    return {
+        toggle_is_show_categories: () => dispatch({type: 'TOGGLE_SHOW_CATEGORY'}),
+    }
+}
+export default connect(mapStateToProp, mapDispatchToProps)(Nav);

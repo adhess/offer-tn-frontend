@@ -1,6 +1,9 @@
 .productContainer>h4, .dataSheetContainer>h4, .details>h4  {
   margin: 16px 0 8px 5px;
 }
+.productContainer>h4 {
+  width: 400px;
+}
 .randomProduct {
   text-decoration: none;
   width: fit-content;
@@ -97,7 +100,7 @@
   max-width: 100px;
 }
 .vendor:hover {
-  box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .4);
+  box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .2);
   cursor: pointer;
   top: -1px
 }
