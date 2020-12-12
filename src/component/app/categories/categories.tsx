@@ -62,7 +62,7 @@ class Categories extends Component<any, any> {
                                  key={category.name}
                                  onClick={() => {
                                      this.onSelectCategory(category.name);
-                                     this.props.update_filter({});
+                                     // this.props.update_filter({checkbox_choices:[], price_range: []});
                                  }}>
                             {categoryComponent(category.icon, category.name)}
                         </NavLink>
@@ -100,7 +100,7 @@ class Categories extends Component<any, any> {
             );
             // this.props.toggle_is_show_categories();
         } else {
-            this.props.toggle_is_show_categories();
+            // this.props.toggle_is_show_categories();
         }
     }
 }

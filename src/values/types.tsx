@@ -21,6 +21,7 @@ interface ProductType {
     characteristics: any;
     popularity: number;
     category: number;
+    minimum_price: number;
 }
 
 export default ProductType;

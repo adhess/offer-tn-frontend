@@ -3,11 +3,12 @@ import {Component} from "react";
 import React from 'react';
 import Product from "./product/Product";
 import ProductType from "../../../values/types";
-import axios from "axios";
+import axios, {CancelTokenSource} from "axios";
 import {connect} from "react-redux";
 
 class ListProducts extends Component<any, any> {
-    state = {products: undefined};
+    state: { products?: [], source?: CancelTokenSource } = {};
+    private source: any;
 
     componentDidMount() {
         this.getProducts();
@@ -42,7 +43,11 @@ class ListProducts extends Component<any, any> {
             filter = JSON.parse(decodeURI(search?.substring(8)));
             console.log(filter);
         }
-        axios.get(url, {params: filter}).then(res => {
+
+        // cancel old request.
+        this.source?.cancel();
+        this.source = axios.CancelToken.source();
+        axios.get(url, {params: filter, cancelToken: this.source?.token }).then(res => {
             this.setState({products: res.data.results});
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);

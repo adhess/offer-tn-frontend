@@ -31,7 +31,7 @@ class Product extends React.Component<IProductProps, any> {
                 <h4 className={styles.productName}>{this.state.data.name}</h4>
                 <div className='row'>
                     <h4 className={styles.price}>
-                        {Math.min(...this.state.data.details.map(detail => detail.registered_prices.slice(-1)[0]), Infinity)} TND
+                        {this.state.data.minimum_price} TND
                     </h4>
                     <h4 className={styles.popularity}>
                         <FavoriteBorderIcon className={styles.favorite}/>

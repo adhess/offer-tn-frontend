@@ -1,7 +1,10 @@
 const initialState = {
     async_counter: 0,
     is_show_category: false,
-    activeFilter: {}
+    activeFilter: {
+        checkbox_choices: [],
+        price_range: []
+    }
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {

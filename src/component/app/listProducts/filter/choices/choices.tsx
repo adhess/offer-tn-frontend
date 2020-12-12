@@ -5,7 +5,7 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 
 class Choices extends React.Component<any, any> {
-    state: {items: string[]} = {
+    state: { items: string[] } = {
         items: []
     }
     render() {
@@ -14,11 +14,16 @@ class Choices extends React.Component<any, any> {
                 <h4>{this.props.data.name}</h4>
                 <div className={css.checkboxContainer}>
                     {
-                        this.props.data.values.map((v: string) => <div key={v}>
-                            <Checkbox size='small' checked={!!this.props.activeFilter[this.props.data.name]?.includes(v)}
-                                      onChange={(event) => this.onCheckboxToggle(v)}/>
-                            <h5>{v}</h5>
-                        </div>)
+                        this.props.data.values
+                            .sort((a: { name: string, count: number },
+                                   b: { name: string, count: number }) => a.name.length === b.name.length ?
+                                a.name.localeCompare(b.name) : a.name.length - b.name.length)
+                            .map((v: { name: string, count: number }) => <div key={v.name}>
+                                <Checkbox size='small'
+                                          checked={this.props.activeFilter.checkbox_choices[this.props.data.name]?.includes(v.name)}
+                                          onChange={(event) => this.onCheckboxToggle(v.name)}/>
+                                <h5>{v.name} ({v.count})</h5>
+                            </div>)
                     }
                 </div>
             </div>
@@ -26,19 +31,19 @@ class Choices extends React.Component<any, any> {
     }
 
     private onCheckboxToggle(choice: string) {
-        let filter = {...this.props.activeFilter};
-        let items = filter[this.props.data.name];
+        let checkbox_choices = {...this.props.activeFilter.checkbox_choices};
+        let items = checkbox_choices[this.props.data.name];
         if (items !== undefined) {
-            if (filter[this.props.data.name].includes(choice)) {
-                filter[this.props.data.name] = items.filter((o: string) => choice !== o);
-                if (filter[this.props.data.name].length === 0) delete filter[this.props.data.name];
-            }
-            else items.push(choice);
+            if (checkbox_choices[this.props.data.name].includes(choice)) {
+                checkbox_choices[this.props.data.name] = items.filter((o: string) => choice !== o);
+                if (checkbox_choices[this.props.data.name].length === 0) delete checkbox_choices[this.props.data.name];
+            } else items.push(choice);
         } else {
-            filter[this.props.data.name] = [choice];
+            checkbox_choices[this.props.data.name] = [choice];
         }
-        this.props.update_filter(filter);
-        this.props.history.push({search: '?filter=' + JSON.stringify(filter)})
+        let newFilter = {checkbox_choices: checkbox_choices, price_range: this.props.selected_price_range};
+        this.props.update_filter(newFilter);
+        this.props.history.push({search: '?filter=' + JSON.stringify(newFilter)})
     }
 
 
