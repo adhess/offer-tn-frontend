@@ -1,4 +1,4 @@
-import styles from './ListProducts.module.css';
+import styles from './ListProducts.module.scss';
 import {Component} from "react";
 import React from 'react';
 import Product from "./product/Product";
@@ -22,12 +22,19 @@ class ListProducts extends Component<any, any> {
 
     render() {
         return (
-            <div className={styles.container}>
-                {
-                    (this.state.products || []).map(
-                        (product: ProductType) => <Product data={product} key={product.id}/>)
-                }
-            </div>
+            !this.state.products || this.state.products.length === 0 ?
+                <div className={styles.noProduct}>
+                    <p>&#9785;</p>
+                    <h4>No Product</h4>
+                    <h3>Found</h3>
+                </div>
+                :
+                <div className={styles.container}>
+                    {
+                        (this.state.products || []).map(
+                            (product: ProductType) => <Product data={product} key={product.id}/>)
+                    }
+                </div>
         );
     }
 
@@ -47,7 +54,7 @@ class ListProducts extends Component<any, any> {
         // cancel old request.
         this.source?.cancel();
         this.source = axios.CancelToken.source();
-        axios.get(url, {params: filter, cancelToken: this.source?.token }).then(res => {
+        axios.get(url, {params: filter, cancelToken: this.source?.token}).then(res => {
             this.setState({products: res.data.results});
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);

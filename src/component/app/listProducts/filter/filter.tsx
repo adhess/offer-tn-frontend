@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import axios from "axios";
 import Price from "./price/price";
+import {Button} from "@material-ui/core";
 
 class Filter extends Component<any, any> {
     state = {checkbox_choices: [], price_range: [0, 0], selected_price_range: undefined,}
@@ -18,6 +19,18 @@ class Filter extends Component<any, any> {
         }
         return <div className={[styles.container, 'shadow'].join(' ')}>
             <h3>Filter By:</h3>
+            {
+                this.props.location?.search === '' ? null:
+                <Button color="secondary"
+                        variant="outlined"
+                        onClick={() => {
+                            this.props.history.push({search: ''});
+                            this.setState((state: any) => ({selected_price_range: undefined}), () =>
+                                this.setState((state: any) => ({selected_price_range: this.state.price_range}))
+                            );
+                        }}
+                >Reset Filter</Button>
+            }
             {
                 !this.state.selected_price_range ? null:
                 <Price onUpdatePriceRange={onUpdatePriceRange}

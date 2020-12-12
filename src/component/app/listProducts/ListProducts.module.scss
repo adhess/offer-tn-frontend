@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    justify-content: center;
+    align-content: start;
+}
+
+.noProduct {
+    width: 100% !important;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    p {
+        font-size: 50px;
+    }
+    h3 {
+        color: var(--cherry);
+    }
+    h3 , h4 , p {
+        margin: 0
+    }
+}
