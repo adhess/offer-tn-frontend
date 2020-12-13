@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styles from './filter.module.scss';
-import Choices from "./choices/choices";
+import Specs from "./choices/choices";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import axios from "axios";
@@ -8,7 +8,7 @@ import Price from "./price/price";
 import {Button} from "@material-ui/core";
 
 class Filter extends Component<any, any> {
-    state = {checkbox_choices: [], price_range: [0, 0], selected_price_range: undefined,}
+    state = {specs: [], price_range: [0, 0], selected_price_range: undefined,}
 
     render() {
         return <div className={[styles.container, 'shadow'].join(' ')}>
@@ -33,11 +33,11 @@ class Filter extends Component<any, any> {
                     />
             }
             {
-                this.state.checkbox_choices.map((choices: any) =>
-                    <Choices key={choices.name}
-                             data={choices}
-                             checkedValues={this.props.activeFilter.checkbox_choices[choices.name] || []}
-                             onSpecSelected={this.onSpecSelected.bind(this)}/>
+                this.state.specs.map((choices: any) =>
+                    <Specs key={choices.name}
+                           data={choices}
+                           checkedValues={this.props.activeFilter.checked_specs[choices.name] || []}
+                           onSpecSelected={this.onSpecSelected.bind(this)}/>
                 )
             }
         </div>;
@@ -60,7 +60,7 @@ class Filter extends Component<any, any> {
         const category_id = this.props?.match?.params?.category_id;
         const url = '/api/getFilterByCategory/' + (category_id ? '?category_id=' + category_id : '');
         let filter = {
-            checkbox_choices: [],
+            checked_specs: [],
             price_range: []
         };
         let search = this.props.location?.search;
@@ -70,7 +70,7 @@ class Filter extends Component<any, any> {
         this.props.update_filter(filter);
         axios.get(url, {params: filter}).then(res => {
             this.setState({
-                checkbox_choices: res.data.checkbox_choices,
+                specs: res.data.specs,
                 price_range: res.data.price_range,
                 selected_price_range: filter['price_range'].length > 0 ? filter.price_range : res.data.price_range
             });
@@ -80,24 +80,24 @@ class Filter extends Component<any, any> {
 
     private onSpecSelected(specName: string, choiceName: string) {
         console.log('this.props', this.props);
-        let checkbox_choices = {...this.props.activeFilter.checkbox_choices};
+        let checked_specs = {...this.props.activeFilter.checked_specs};
         let items = [];
-        if (checkbox_choices[specName] !== undefined) {
-            items.push(...checkbox_choices[specName]);
+        if (checked_specs[specName] !== undefined) {
+            items.push(...checked_specs[specName]);
             if (items.includes(choiceName)) {
                 items = items.filter((selectedOptionName: string) => choiceName !== selectedOptionName);
             } else items.push(choiceName);
         } else {
             items.push(choiceName);
         }
-        if (items.length > 0) checkbox_choices[specName] = items;
-        else delete checkbox_choices[specName];
+        if (items.length > 0) checked_specs[specName] = items;
+        else delete checked_specs[specName];
 
-        let filter = {checkbox_choices: checkbox_choices, price_range: this.state.selected_price_range};
+        let filter = {checked_specs: checked_specs, price_range: this.state.selected_price_range};
         this.props.history.push({search: '?filter=' + JSON.stringify(filter)})
     }
     private onUpdatePriceRange(price_range: number[]) {
-        let newFilter = {checkbox_choices: this.props.activeFilter.checkbox_choices, price_range: price_range};
+        let newFilter = {checked_specs: this.props.activeFilter.checked_specs, price_range: price_range};
         this.props.history.push({search: '?filter=' + JSON.stringify(newFilter)});
         this.setState({selected_price_range: price_range});
     }

@@ -2,7 +2,7 @@ const initialState = {
     async_counter: 0,
     is_show_category: false,
     activeFilter: {
-        checkbox_choices: [],
+        checked_specs: [],
         price_range: []
     }
 }
