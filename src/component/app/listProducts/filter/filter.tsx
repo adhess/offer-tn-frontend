@@ -11,36 +11,40 @@ class Filter extends Component<any, any> {
     state = {specs: [], price_range: [0, 0], selected_price_range: undefined,}
 
     render() {
-        return <div className={[styles.container, 'shadow'].join(' ')}>
-            <h3>Filter By:</h3>
-            {
-                this.props.location?.search === '' ? null :
-                    <Button color="secondary"
-                            variant="outlined"
-                            onClick={() => {
-                                this.props.history.push({search: ''});
-                                this.setState((state: any) => ({selected_price_range: undefined}), () =>
-                                    this.setState((state: any) => ({selected_price_range: this.state.price_range}))
-                                );
-                            }}
-                    >Reset Filter</Button>
-            }
-            {
-                !this.state.selected_price_range || this.state.price_range === [0,0] ? null :
-                    <Price onUpdatePriceRange={this.onUpdatePriceRange.bind(this)}
-                           price_range={this.state.price_range}
-                           selected_price_range={this.state.selected_price_range}
-                    />
-            }
-            {
-                this.state.specs.map((choices: any) =>
-                    <Specs key={choices.name}
-                           data={choices}
-                           checkedValues={this.props.activeFilter.checked_specs[choices.name] || []}
-                           onSpecSelected={this.onSpecSelected.bind(this)}/>
-                )
-            }
-        </div>;
+        return !(
+            this.state.specs?.length > 0 ||
+            (this.state.price_range?.length === 2 && this.state.price_range[0]) !== this.state.price_range[1]
+        ) ? null :
+            <div className={[styles.container, 'shadow'].join(' ')}>
+                <h3>Filter By:</h3>
+                {
+                    this.props.location?.search === '' ? null :
+                        <Button color="secondary"
+                                variant="outlined"
+                                onClick={() => {
+                                    this.props.history.push({search: ''});
+                                    this.setState((state: any) => ({selected_price_range: undefined}), () =>
+                                        this.setState((state: any) => ({selected_price_range: this.state.price_range}))
+                                    );
+                                }}
+                        >Reset Filter</Button>
+                }
+                {
+                    !this.state.selected_price_range || this.state.price_range === [0, 0] ? null :
+                        <Price onUpdatePriceRange={this.onUpdatePriceRange.bind(this)}
+                               price_range={this.state.price_range}
+                               selected_price_range={this.state.selected_price_range}
+                        />
+                }
+                {
+                    this.state.specs.map((choices: any) =>
+                        <Specs key={choices.name}
+                               data={choices}
+                               checkedValues={this.props.activeFilter.checked_specs[choices.name] || []}
+                               onSpecSelected={this.onSpecSelected.bind(this)}/>
+                    )
+                }
+            </div>;
     }
 
 
@@ -96,6 +100,7 @@ class Filter extends Component<any, any> {
         let filter = {checked_specs: checked_specs, price_range: this.state.selected_price_range};
         this.props.history.push({search: '?filter=' + JSON.stringify(filter)})
     }
+
     private onUpdatePriceRange(price_range: number[]) {
         let newFilter = {checked_specs: this.props.activeFilter.checked_specs, price_range: price_range};
         this.props.history.push({search: '?filter=' + JSON.stringify(newFilter)});
