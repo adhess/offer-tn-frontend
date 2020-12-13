@@ -22,10 +22,7 @@ class Filter extends Component<any, any> {
                         <Button color="secondary"
                                 variant="outlined"
                                 onClick={() => {
-                                    this.props.history.push({search: ''});
-                                    this.setState((state: any) => ({selected_price_range: undefined}), () =>
-                                        this.setState((state: any) => ({selected_price_range: this.state.price_range}))
-                                    );
+                                    this.onResetFilter();
                                 }}
                         >Reset Filter</Button>
                 }
@@ -48,6 +45,13 @@ class Filter extends Component<any, any> {
     }
 
 
+    private onResetFilter() {
+        this.props.history.push({search: ''});
+        this.setState((state: any) => ({selected_price_range: undefined}), () =>
+            this.setState((state: any) => ({selected_price_range: this.state.price_range}))
+        );
+    }
+
     componentDidMount() {
         this.getFilters();
     }
@@ -56,6 +60,9 @@ class Filter extends Component<any, any> {
         if (this.props.match.url !== prevProps.match.url
             || this.props.location.search !== prevProps.location.search) {
             this.getFilters();
+            if (this.props.match.url !== prevProps.match.url) {
+                this.onResetFilter();
+            }
         }
     }
 
