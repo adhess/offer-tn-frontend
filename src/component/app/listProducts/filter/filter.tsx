@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styles from './filter.module.scss';
-import Specs from "./choices/choices";
+import Specs from "./specs/specs";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import axios from "axios";

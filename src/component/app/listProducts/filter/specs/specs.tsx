@@ -1,8 +1,8 @@
 import React from "react";
 import {Checkbox} from "@material-ui/core";
-import css from './choices.module.scss';
+import css from './specs.module.scss';
 
-export default function Choices(props: any) {
+export default function Specs(props: any) {
     return (
         <div className={css.container}>
             <h4>{props.data.name}</h4>
