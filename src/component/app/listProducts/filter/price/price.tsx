@@ -16,14 +16,13 @@ const PriceSlider = withStyles({
 })(Slider);
 
 export default function Price(props: any) {
-
-
     return (
         <div className={css.container}>
             <h4>
                 Price Range:
             </h4>
             <PriceSlider
+                key={`price-slider`}
                 onChangeCommitted={(e: any, newValue: number | number[]) => { props.onUpdatePriceRange(newValue as number[]); }}
                 valueLabelDisplay="auto"
                 min={props?.price_range[0]}
