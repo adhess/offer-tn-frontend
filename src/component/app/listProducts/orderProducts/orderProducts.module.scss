@@ -1,0 +1,18 @@
+.container {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  place-content: center space-between;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: flex-start;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  div>svg {
+    color: #757171;
+  }
+}

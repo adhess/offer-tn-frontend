@@ -5,9 +5,20 @@ import Product from "./product/Product";
 import ProductType from "../../../values/types";
 import axios, {CancelTokenSource} from "axios";
 import {connect} from "react-redux";
+import OrderProducts from "./orderProducts/orderProducts";
+import InfiniteScroll from 'react-infinite-scroller';
 
 class ListProducts extends Component<any, any> {
-    state: { products?: [], source?: CancelTokenSource } = {};
+    state: {
+        products?: [],
+        source?: CancelTokenSource,
+        hasMoreData?: undefined,
+        orderBy: 'Newest' | 'Price' | 'Popularity' | 'Name',
+        isAscending: boolean
+    } = {
+        orderBy: 'Newest',
+        isAscending: true
+    };
     private source: any;
 
     componentDidMount() {
@@ -29,35 +40,103 @@ class ListProducts extends Component<any, any> {
                     <h3>Found</h3>
                 </div>
                 :
-                <div className={styles.container}>
-                    {
-                        (this.state.products || []).map(
-                            (product: ProductType) => <Product data={product} key={product.id}/>)
-                    }
+                <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                    <OrderProducts
+                        isAscending={this.state.isAscending}
+                        orderBy={this.state.orderBy}
+                        onOrderByChange={this.onOrderByChange.bind(this)}
+                        onToggleIsAscending={this.onToggleIsAscending.bind(this)}/>
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={this.loadMoreData}
+                        hasMore={this.state.hasMoreData}
+                        loader={<div className="loader" key={0}>Loading ...</div>}
+                    >
+                        <div className={styles.container}>
+                            {
+                                (this.state.products || []).map(
+                                    (product: ProductType, index: number) => <Product data={product} key={index}/>)
+                            }
+                        </div>
+                    </InfiniteScroll>
+
                 </div>
+
         );
+    }
+
+    private onOrderByChange(name: string) {
+        if (name && name !== this.state.orderBy) {
+            this.setState({orderBy: name, isAscending: name !== 'Popularity'}, () => this.getProducts())
+        }
+    }
+
+    private onToggleIsAscending() {
+        this.setState((state: { isAscending: boolean }) => ({isAscending: !state.isAscending}), () => this.getProducts())
     }
 
     private getProducts() {
         this.props.add_async_action();
         const category_id = this.props?.match?.params?.category_id;
-        // home -> get products by popularity
-        // otherwise -> get products by url_params.category_id
-        const url = '/api/products/' + (category_id ? '?category_id=' + category_id : '');
-        let filter = {};
-        let search = this.props.location?.search;
-        if (search?.startsWith('?filter=')) {
-            filter = JSON.parse(decodeURI(search?.substring(8)));
-            console.log(filter);
-        }
+        const url = this.getUrl(category_id);
+        let filter = this.getFilter();
 
         // cancel old request.
         this.source?.cancel();
         this.source = axios.CancelToken.source();
         axios.get(url, {params: filter, cancelToken: this.source?.token}).then(res => {
-            this.setState({products: res.data.results});
+            this.setState({products: undefined}, () => this.setState({
+                products: res.data.results,
+                hasMoreData: res.data.next !== null
+            }));
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);
+    }
+
+    private getUrl(category_id: string | number) {
+        let url = '/api/products/' + (category_id ? '?category_id=' + category_id : '');
+        const desc = this.state.isAscending ? '' : '-';
+        switch (this.state.orderBy) {
+            case 'Newest':
+                break;
+            case 'Price':
+                url += '&ordering=' + desc + 'minimum_price';
+                break;
+            case 'Popularity':
+                url += '&ordering=' + desc + 'popularity';
+                break;
+            case 'Name':
+                url += '&ordering=' + desc + 'name';
+                break;
+        }
+        return url;
+    }
+
+    loadMoreData = (e: any) => {
+        this.props.add_async_action();
+        const category_id = this.props?.match?.params?.category_id;
+        const url = this.getUrl(category_id) + '&page=' + e;
+        let filter = this.getFilter();
+
+        // cancel old request.
+        this.source?.cancel();
+        this.source = axios.CancelToken.source();
+        axios.get(url, {params: filter, cancelToken: this.source?.token}).then(res => {
+            this.setState((state: { products: any; }) => ({
+                products: [...state.products, ...res.data.results],
+                hasMoreData: res.data.next !== null
+            }));
+            this.props.sub_async_action();
+        }).catch(this.props.sub_async_action);
+    }
+
+    private getFilter() {
+        let filter = {};
+        let search = this.props.location?.search;
+        if (search?.startsWith('?filter=')) {
+            filter = JSON.parse(decodeURI(search?.substring(8)));
+        }
+        return filter;
     }
 }
 
