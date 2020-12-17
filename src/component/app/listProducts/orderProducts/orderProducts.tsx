@@ -123,7 +123,8 @@ export default function OrderProducts(props: any) {
                     >
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                <MenuList style={{width: 130}}
+                                    autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                     {
                                         ['Newest', 'Price', 'Popularity', 'Name'].map((name: string, index: number) =>
                                             <MenuItem onClick={(e) => {

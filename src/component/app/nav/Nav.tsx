@@ -11,15 +11,18 @@ import styles from "./nav.module.scss";
 import {Button} from "@material-ui/core";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-
+import ListIcon from '@material-ui/icons/List';
 
 class Nav extends Component<any, any> {
     render() {
         return (
             <div className={styles.container}>
                 <Box className={[styles.box].join(' ')}>
-                    <NavLink to='/'>
-                        <img className={styles.logo} src={logo} alt=''/>
+                    <NavLink to='/' className={styles.link}>
+                        <div>
+                            <h1 style={{color: 'white'}}>Offer</h1>
+                            <h1 style={{color: 'var(--cherry)'}}>.tn</h1>
+                        </div>
                     </NavLink>
 
                     <div className={styles.searchAction}>
@@ -40,15 +43,21 @@ class Nav extends Component<any, any> {
                                 )
                             }}
                         />
+                        {
+                            window.innerWidth < 549 ? <IconButton onClick={this.props.toggle_is_show_categories}  className={styles.categoriesButton}>
+                                    <ListIcon/>
+                                </IconButton>
+                                :
                         <Button variant="outlined" color="inherit" className={styles.categoriesButton}
                                 onClick={this.props.toggle_is_show_categories}
                                 endIcon={this.props.is_show_category ? <KeyboardArrowUpIcon/> :
                                     <KeyboardArrowDownIcon/>}>
                             Categories
                         </Button>
+                        }
                     </div>
 
-                    <div style={{width: '131px'}}/>
+                    <div style={{width: '140px'}}/>
                 </Box>
                 {
                     this.props.async_counter > 0 ? <LinearProgress style={{zIndex: 1000}} color="secondary"/> : null

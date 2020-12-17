@@ -1,0 +1,136 @@
+.collapse {
+  z-index: 1000;
+  width: fit-content;
+  top: 56px;
+  position: fixed;
+}
+
+.paper {
+  margin: 0 auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    background-color: var(--nav) !important;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+}
+
+.pointer:hover {
+  cursor: pointer;
+  color: #E0E0E0;
+  text-shadow: 0 1px 0 #796992;
+}
+
+.categoriesContainer {
+  width: fit-content;
+  margin: auto;
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+.collapseContainer {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  text-shadow: 0 1px 0 #666666;
+  border-radius: 5px;
+  background-image: linear-gradient(180deg, #0d8dc7, #0d8dc7 24%, #3fb8b9);
+  padding-left: 2em;
+}
+
+.categoryContainer {
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+
+  i {
+    transition: all .4s;
+    border: 3px solid white;
+    border-radius: 50%;
+  }
+
+  > h4 {
+    color: white;
+    margin: 8px 0;
+  }
+}
+
+.categoryContainer:hover i {
+  border-color: var(--nav);
+  align-self: auto;
+  padding: 15%;
+}
+
+.category {
+  margin: 0.5em auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  /*border: 2px solid rgba(var(--navBorder), 0.8);*/
+
+  /*background-image: linear-gradient(180deg, #a2d2ff, #bde0fe 24%, #ffafcc);*/
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .3);*/
+
+}
+
+.category > svg, .category > i {
+  width: 30px !important;
+  height: 30px !important;
+  color: var(--nav);
+  font-size: 30px;
+}
+
+
+.subCategory {
+  color: white;
+}
+
+@media only screen and (max-width: 549px) {
+  .subCategory {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 550px) and (max-width: 799px) {
+  .subCategory {
+    width: 47%;
+  }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1099px) {
+  .subCategory {
+    width: 32%;
+  }
+}
+
+@media only screen and (min-width: 1100px) and (max-width: 1499px) {
+  .subCategory {
+    width: 24%;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .subCategory {
+    width: 19%;
+  }
+}

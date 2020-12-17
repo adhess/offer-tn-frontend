@@ -5,7 +5,9 @@
   --cherry2: #fc5185;
   --lightgray: #eaeaea;
   --gray: #828282;
-  --nav: linear-gradient(135deg,#2ba7df, #007bff);
+  --nav: #00A2EC;
+  --lightnav: calc(var(--nav) + 5);
+  --primary: #1976d2;
 }
 
 .row {
@@ -22,7 +24,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: rgba(255, 255, 255, 1);
 }
+body::-webkit-scrollbar {
+  width: 0em;
+}
 
+/*body::-webkit-scrollbar-track {*/
+/*  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*body::-webkit-scrollbar-thumb {*/
+/*  background-color: darkgrey;*/
+/*  outline: 1px solid slategrey;*/
+/*}*/
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

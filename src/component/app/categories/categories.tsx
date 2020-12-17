@@ -1,9 +1,11 @@
-import styles from './categories.module.css';
+import styles from './categories.module.scss';
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import axios from 'axios';
-
+import {Collapse} from "@material-ui/core";
+import left_corner from '../../../assets/images/left_corner.svg'
+import right_corner from '../../../assets/images/right_corner.svg'
 class Categories extends Component<any, any> {
     state = {
         selectedCategory: {
@@ -31,54 +33,69 @@ class Categories extends Component<any, any> {
             </div>
             <h4>{name}</h4>
         </>;
-        return this.props.is_show_category ? <div style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            flexFlow: 'wrap',
-            alignContent: 'center',
-            justifyContent: 'center'
-        }}>
-            {
-                    this.state.stepCategories.length > 1 ?
-                        <div className={styles.categoryContainer}
-                             onClick={() => this.setState((state: any) =>
-                                 ({stepCategories: [...state.stepCategories].slice(0, state.stepCategories.length - 1)}))}>
-                            {categoryComponent('fas fa-arrow-left', 'Return')}
-                        </div>
-                        : null
-            }
-            {
-                this.state.stepCategories[this.state.stepCategories.length - 1].map((category: any) => (
-                    category?.children?.length > 0 ?
-                        <div className={styles.categoryContainer}
-                             key={category.name}
-                             onClick={() => this.onSelectCategory(category.name)}>
-                            {categoryComponent(category.icon, category.name)}
-                        </div> :
-                        <NavLink to={'/product/list/' + category.name + '/' + category.id}
-                                 className={styles.categoryContainer}
-                                 key={category.name}
-                                 onClick={() => {
-                                     this.onSelectCategory(category.name);
-                                     // this.props.update_filter({checkbox_choices:[], price_range: []});
-                                 }}>
-                            {categoryComponent(category.icon, category.name)}
-                        </NavLink>
-                ))
-            }
-            {
-                this.state.stepCategories.length > 1 ?
-                    <NavLink
-                        to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
-                        className={styles.categoryContainer}
-                        key={'all'}>
-                        {categoryComponent('fas fa-globe', 'All')}
-                    </NavLink>
-                    : null
-            }
+        const left_margin = (window.innerWidth - (
+            this.state.stepCategories[this.state.stepCategories.length - 1].length
+            + (this.state.stepCategories.length > 1 ? 2 : 0)
+        ) * 100 - 70) / 2;
+        return (
+            <Collapse in={this.props.is_show_category} className={styles.collapse}
+                      style={{
+                          left: left_margin > 0 ? left_margin:0,
+                      }}
+            >
+                <div className={styles.paper}>
+                    {left_margin > 0 ? <img src={left_corner} width={35} height={35} alt=""/> : null}
+                    <div style={{
+                        flexDirection: left_margin > 0 ? 'row':'column',
+                        width: left_margin > 0 ? undefined:200,
+                        flexFlow: left_margin > 0 ? undefined:'wrap',
+                        borderBottomLeftRadius: left_margin > 0 ? 25:0,
+                    }}
+                         className={styles.container}>
+                        {
+                            this.state.stepCategories.length > 1 ?
+                                <div className={styles.categoryContainer}
+                                     onClick={() => this.setState((state: any) =>
+                                         ({stepCategories: [...state.stepCategories].slice(0, state.stepCategories.length - 1)}))}>
+                                    {categoryComponent('fas fa-arrow-left', 'Return')}
+                                </div>
+                                : null
+                        }
+                        {
+                            this.state.stepCategories[this.state.stepCategories.length - 1].map((category: any) => (
+                                category?.children?.length > 0 ?
+                                    <div className={styles.categoryContainer}
+                                         key={category.name}
+                                         onClick={() => this.onSelectCategory(category.name)}>
+                                        {categoryComponent(category.icon, category.name)}
+                                    </div> :
+                                    <NavLink to={'/product/list/' + category.name + '/' + category.id}
+                                             className={styles.categoryContainer}
+                                             key={category.name}
+                                             onClick={() => {
+                                                 this.onSelectCategory(category.name);
+                                                 // this.props.update_filter({checkbox_choices:[], price_range: []});
+                                             }}>
+                                        {categoryComponent(category.icon, category.name)}
+                                    </NavLink>
+                            ))
+                        }
+                        {
+                            this.state.stepCategories.length > 1 ?
+                                <NavLink
+                                    to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
+                                    className={styles.categoryContainer}
+                                    key={'all'}>
+                                    {categoryComponent('fas fa-globe', 'All')}
+                                </NavLink>
+                                : null
+                        }
 
-        </div>:null
+                    </div>
+                    <img src={right_corner} width={35} height={35} alt=""/>
+                </div>
+            </Collapse>
+        );
     }
 
 
