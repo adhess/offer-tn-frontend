@@ -2,7 +2,6 @@ import styles from './ListProducts.module.scss';
 import {Component} from "react";
 import React from 'react';
 import Product from "./product/Product";
-import ProductType from "../../../values/types";
 import axios, {CancelTokenSource} from "axios";
 import {connect} from "react-redux";
 import OrderProducts from "./orderProducts/orderProducts";
