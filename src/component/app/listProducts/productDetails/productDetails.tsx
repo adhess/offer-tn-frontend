@@ -2,21 +2,23 @@ import styles from './productDetails.module.scss';
 import React from "react";
 import {connect} from "react-redux";
 import axios from "axios";
-import ProductType from "../../../../values/types";
 import RecordedPricesChart from "./Chart/RecordedPricesChart";
 import css from '../product/product.module.scss'
 
 class ProductDetails extends React.Component<any, any> {
     state: {
         product?: ProductType;
+        productVendorDetails?: ProductVendorDetailsType[];
         series: [];
     } = {
         product: undefined,
         series: [],
+        productVendorDetails: [],
     };
 
     componentDidMount() {
         this.getProduct();
+        console.log('fuck you');
     }
 
     componentDidUpdate(prevProps: any) {
@@ -50,9 +52,9 @@ class ProductDetails extends React.Component<any, any> {
                     <h4>Recorded Prices</h4>
                     {this.state?.series?.length > 0 ? <RecordedPricesChart series={this.state.series}/> : null}
                     <h4>Vendors</h4>
-                    {this.state.product?.details.map(detail =>
+                    {this.state.productVendorDetails?.map(detail =>
                         <div className={['shadow', styles.vendor].join(' ')}
-                             onClick={() => window.open(detail.url, "_blank")}>
+                             onClick={() => window.open(detail.product_url, "_blank")}>
                             <img src={detail.vendor.logo_url} alt=''/>
                             <div>{detail.warranty} of warranty</div>
                             <div>{this.productState(detail.inventory_state)}</div>
@@ -67,14 +69,31 @@ class ProductDetails extends React.Component<any, any> {
     private getProduct() {
         this.props.add_async_action();
         const product_id = this.props?.match?.params?.product_id;
-        const url = '/api/products/' + product_id;
+        const url = '/api/products/' + product_id + '/';
         axios.get(url).then(res => {
+            console.log('what the heck !! ', res);
             this.setState({
                 product: res.data,
-                series: res.data?.details.map(
-                    (detail: any) => ({data: detail.registered_prices, name: detail.vendor.name})
-                )
+                series: [],
+                productVendorDetails: []
             });
+            res.data.details.map((id: number) => {
+                this.getProductVendorDetails(id);
+            })
+            this.props.sub_async_action();
+        }).catch(this.props.sub_async_action);
+    }
+
+    private getProductVendorDetails(id: any) {
+        this.props.add_async_action();
+        const url = '/api/productvendordetails/' + id + '/';
+        axios.get(url).then(res => {
+            this.setState((state: { productVendorDetails: any; series: any; }) => (
+                {
+                    productVendorDetails: [...state.productVendorDetails, res.data],
+                    series: [...state.series, {data: res.data.registered_prices, name: res.data.vendor.name}]
+                }
+            ));
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);
     }
@@ -84,11 +103,11 @@ class ProductDetails extends React.Component<any, any> {
         if (this.state?.product?.characteristics !== undefined)
             for (let key of Object.keys(this.state.product?.characteristics)) {
                 if (this.state.product?.characteristics[key])
-                ans.push(
-                    <li key={key}>
-                        <h4>{key}</h4><p>:{this.state.product?.characteristics[key]}</p>
-                    </li>
-                )
+                    ans.push(
+                        <li key={key}>
+                            <h4>{key}</h4><p>:{this.state.product?.characteristics[key]}</p>
+                        </li>
+                    )
             }
         return ans;
     }

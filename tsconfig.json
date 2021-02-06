@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*.d.ts"]
+    },
     "lib": [
       "dom",
       "dom.iterable",
