@@ -4,8 +4,14 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import axios from 'axios';
 import {Collapse} from "@material-ui/core";
-import left_corner from '../../../assets/images/left_corner.svg'
-import right_corner from '../../../assets/images/right_corner.svg'
+import {withSnackbar} from 'notistack';
+import Tooltip from "@material-ui/core/Tooltip";
+import Ultrabook from "../../../assets/images/Ultrabook.png"
+import macbook from "../../../assets/images/macbook.png"
+import gamingLaptop from "../../../assets/images/gamingLaptop.png"
+import viewAll from "../../../assets/images/viewAll.png"
+import laptop from "../../../assets/images/laptop.png"
+
 class Categories extends Component<any, any> {
     state = {
         selectedCategory: {
@@ -26,38 +32,43 @@ class Categories extends Component<any, any> {
         }).catch(this.props.sub_async_action);
     }
 
+    icons: any = {
+        'Ultrabook': Ultrabook,
+        'Macbook': macbook,
+        'Gaming laptop': gamingLaptop,
+        // 'View All': viewAll,
+        'Regular laptop': laptop,
+    }
+
     render() {
-        let categoryComponent = (icon: string, name: string) => <>
-            <div className={styles.category}>
-                <i className={icon}/>
-            </div>
-            <h4>{name}</h4>
-        </>;
-        const left_margin = (window.innerWidth - (
-            this.state.stepCategories[this.state.stepCategories.length - 1].length
-            + (this.state.stepCategories.length > 1 ? 2 : 0)
-        ) * 100 - 70) / 2;
+        let categoryComponent = (icon: string, name: string, isActive: boolean) => {
+                return (
+                    <>
+                        <Tooltip title={name}>
+                            <div className={styles.category}>
+                                {
+                                    this.icons[name] ?
+                                        <img className={isActive ? styles.isActive : undefined} src={this.icons[name]}
+                                             alt=""/> :
+                                        <i className={[icon, isActive ? styles.isActive : undefined].join(" ")}/>
+                                }
+                            </div>
+                        </Tooltip>
+                    </>
+                )
+            }
+
+        ;
         return (
-            <Collapse in={this.props.is_show_category} className={styles.collapse}
-                      style={{
-                          left: left_margin > 0 ? left_margin:0,
-                      }}
-            >
+            <Collapse in={this.props.is_show_category} className={styles.collapse}>
                 <div className={styles.paper}>
-                    {left_margin > 0 ? <img src={left_corner} width={35} height={35} alt=""/> : null}
-                    <div style={{
-                        flexDirection: left_margin > 0 ? 'row':'column',
-                        width: left_margin > 0 ? undefined:200,
-                        flexFlow: left_margin > 0 ? undefined:'wrap',
-                        borderBottomLeftRadius: left_margin > 0 ? 25:0,
-                    }}
-                         className={styles.container}>
+                    <div className={styles.container}>
                         {
                             this.state.stepCategories.length > 1 ?
                                 <div className={styles.categoryContainer}
                                      onClick={() => this.setState((state: any) =>
                                          ({stepCategories: [...state.stepCategories].slice(0, state.stepCategories.length - 1)}))}>
-                                    {categoryComponent('fas fa-arrow-left', 'Return')}
+                                    {categoryComponent('fas fa-arrow-left', 'Go Back', true)}
                                 </div>
                                 : null
                         }
@@ -66,17 +77,17 @@ class Categories extends Component<any, any> {
                                 category?.children?.length > 0 ?
                                     <div className={styles.categoryContainer}
                                          key={category.name}
-                                         onClick={() => this.onSelectCategory(category.name)}>
-                                        {categoryComponent(category.icon, category.name)}
+                                         onClick={(e) => this.onSelectCategory(category.name, category.isActive, e)}>
+                                        {categoryComponent(category.icon, category.name, category.isActive)}
                                     </div> :
                                     <NavLink to={'/product/list/' + category.name + '/' + category.id}
                                              className={styles.categoryContainer}
                                              key={category.name}
-                                             onClick={() => {
-                                                 this.onSelectCategory(category.name);
+                                             onClick={(e) => {
+                                                 this.onSelectCategory(category.name, category.isActive, e);
                                                  // this.props.update_filter({checkbox_choices:[], price_range: []});
                                              }}>
-                                        {categoryComponent(category.icon, category.name)}
+                                        {categoryComponent(category.icon, category.name, category.isActive)}
                                     </NavLink>
                             ))
                         }
@@ -85,38 +96,42 @@ class Categories extends Component<any, any> {
                                 <NavLink
                                     to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
                                     className={styles.categoryContainer}
-                                    key={'all'}>
-                                    {categoryComponent('fas fa-globe', 'All')}
+                                    key={'View All'}>
+                                    {categoryComponent('fas fa-globe', 'View All', true)}
                                 </NavLink>
                                 : null
                         }
 
                     </div>
-                    <img src={right_corner} width={35} height={35} alt=""/>
                 </div>
             </Collapse>
         );
     }
 
 
-    private onSelectCategory(name: any) {
-        console.log(this.state.stepCategories);
-        const selectedCategory: any = this.state.stepCategories[this.state.stepCategories.length - 1]
-            .find((category: any) => category.name === name);
-        console.log(selectedCategory);
-        if (selectedCategory !== undefined && selectedCategory?.children?.length > 0) {
-            this.setState((state: any) =>
-                ({
-                    selectedCategory: selectedCategory,
-                    stepCategories: [...state.stepCategories,
-                        state.stepCategories[this.state.stepCategories.length - 1]
-                            .find((category: any) => category.name === name).children
-                    ]
-                })
-            );
-            // this.props.toggle_is_show_categories();
+    private onSelectCategory(name: any, isActive: boolean, e: any) {
+        if (isActive) {
+            const selectedCategory: any = this.state.stepCategories[this.state.stepCategories.length - 1]
+                .find((category: any) => category.name === name);
+            if (selectedCategory !== undefined && selectedCategory?.children?.length > 0) {
+                this.setState((state: any) =>
+                    ({
+                        selectedCategory: selectedCategory,
+                        stepCategories: [...state.stepCategories,
+                            state.stepCategories[this.state.stepCategories.length - 1]
+                                .find((category: any) => category.name === name).children
+                        ]
+                    })
+                );
+                // this.props.toggle_is_show_categories();
+            } else {
+                this.props.toggle_is_show_categories();
+            }
         } else {
-            // this.props.toggle_is_show_categories();
+            e.preventDefault();
+            // variant could be success, error, warning, info, or default
+            this.props.enqueueSnackbar('Not implemented yet!', {variant: 'info'});
+            console.log(this.props);
         }
     }
 }
@@ -135,4 +150,4 @@ const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
     }
 }
 
-export default connect(mapStateToProp, mapDispatchToProps)(Categories);
+export default connect(mapStateToProp, mapDispatchToProps)(withSnackbar(Categories));
