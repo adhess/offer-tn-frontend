@@ -6,6 +6,7 @@ import axios, {CancelTokenSource} from "axios";
 import {connect} from "react-redux";
 import OrderProducts from "./orderProducts/orderProducts";
 import InfiniteScroll from 'react-infinite-scroller';
+import {Skeleton} from "@material-ui/lab";
 
 class ListProducts extends Component<any, any> {
     state: {
@@ -13,10 +14,12 @@ class ListProducts extends Component<any, any> {
         source?: CancelTokenSource,
         hasMoreData?: undefined,
         orderBy: 'Newest' | 'Price' | 'Popularity' | 'Name',
-        isAscending: boolean
+        isAscending: boolean,
+        isLoadingProducts: boolean
     } = {
         orderBy: 'Newest',
-        isAscending: true
+        isAscending: true,
+        isLoadingProducts: false,
     };
     private source: any;
 
@@ -31,35 +34,54 @@ class ListProducts extends Component<any, any> {
     }
 
     render() {
-        return (
-            !this.state.products || this.state.products.length === 0 ?
-                <div className={styles.noProduct}>
-                    <p>&#9785;</p>
-                    <h4>No Product</h4>
-                    <h3>Found</h3>
-                </div>
-                :
-                <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                    <OrderProducts
-                        isAscending={this.state.isAscending}
-                        orderBy={this.state.orderBy}
-                        onOrderByChange={this.onOrderByChange.bind(this)}
-                        onToggleIsAscending={this.onToggleIsAscending.bind(this)}/>
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={this.loadMoreData}
-                        hasMore={this.state.hasMoreData}
-                        loader={<div className="loader" key={0}>Loading ...</div>}
-                    >
-                        <div className={styles.container}>
-                            {
-                                (this.state.products || []).map(
-                                    (product: ProductType, index: number) => <Product data={product} key={index}/>)
-                            }
+        function getLoadingProducts() {
+            const ans = [];
+            let nb = Math.floor((window.innerWidth - 32) / 278);
+            for (let i = 0; i < nb; i++) {
+                ans.push(
+                    <div className={['shadow', styles.item].join(' ')}>
+                        <Skeleton variant="rect" width={230} height={230}/>
+                        <Skeleton/>
+                        <div className={styles.skeletonPrice}>
+                            <Skeleton variant="rect" width={100} height={30}/>
+                            <Skeleton variant="rect" width={100} height={30}/>
                         </div>
-                    </InfiniteScroll>
+                    </div>
+                )
+            }
+            return <div className={styles.container} style={{margin: '0 auto'}}>{ans}</div>;
+        }
 
-                </div>
+        return (
+            this.state.isLoadingProducts ? getLoadingProducts() :
+                !this.state.products || this.state.products.length === 0 ?
+                    <div className={styles.noProduct}>
+                        <p>&#9785;</p>
+                        <h4>No Product</h4>
+                        <h3>Found</h3>
+                    </div>
+                    :
+                    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                        <OrderProducts
+                            isAscending={this.state.isAscending}
+                            orderBy={this.state.orderBy}
+                            onOrderByChange={this.onOrderByChange.bind(this)}
+                            onToggleIsAscending={this.onToggleIsAscending.bind(this)}/>
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={this.loadMoreData}
+                            hasMore={this.state.hasMoreData}
+                            loader={<div className="loader" key={0}>Loading ...</div>}
+                        >
+                            <div className={styles.container}>
+                                {
+                                    (this.state.products || []).map(
+                                        (product: ProductType, index: number) => <Product data={product} key={index}/>)
+                                }
+                            </div>
+                        </InfiniteScroll>
+
+                    </div>
 
         );
     }
@@ -76,6 +98,7 @@ class ListProducts extends Component<any, any> {
 
     private getProducts() {
         this.props.add_async_action();
+        this.setState({isLoadingProducts: true});
         const category_id = this.props?.match?.params?.category_id;
         const url = this.getUrl(category_id);
         let filter = this.getFilter();
@@ -86,7 +109,8 @@ class ListProducts extends Component<any, any> {
         axios.get(url, {params: filter, cancelToken: this.source?.token}).then(res => {
             this.setState({products: undefined}, () => this.setState({
                 products: res.data.results,
-                hasMoreData: res.data.next !== null
+                hasMoreData: res.data.next !== null,
+                isLoadingProducts: false
             }));
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);

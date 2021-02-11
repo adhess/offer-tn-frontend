@@ -22,3 +22,26 @@
         margin: 0
     }
 }
+
+.item {
+    width: 260px;
+    margin: 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 6px;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    transition: all .2s;
+    top: 0;
+    text-decoration: none;
+    height: 317px;
+}
+
+.skeletonPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 6px;
+}
