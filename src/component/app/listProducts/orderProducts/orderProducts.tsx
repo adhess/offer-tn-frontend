@@ -103,7 +103,7 @@ export default function OrderProducts(props: any) {
                         ref={anchorRef}
                         aria-controls={open ? 'menu-list-grow' : undefined}
                         aria-haspopup="true"
-                        style={{height: 32, margin: '0 1em', width: 130}}
+                        style={{height: 32, margin: '0 1em', width: 130, border: '2px solid rgba( 249, 46, 103, 0.75)'}}
                         onClick={handleToggle}>
                     <ExpandMoreIcon/> {props.orderBy}
                 </Button>

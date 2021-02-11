@@ -3,6 +3,9 @@
   width: fit-content;
   top: 56px;
   position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0 1em 1em 0;
 }
 
 .paper {
@@ -12,9 +15,11 @@
   flex-direction: row;
 
   > div {
-    background-color: var(--nav) !important;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    //background: rgba(0, 0, 0, 0.50);
+    //box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    //backdrop-filter: blur(1.5px);
+    //-webkit-backdrop-filter: blur(1.5px);
+    //border: 1px solid rgba(255, 255, 255, 0.18);
   }
 }
 
@@ -22,15 +27,12 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  flex-flow: wrap;
   align-content: center;
   justify-content: center;
+  border-radius: 10px
 }
 
-.pointer:hover {
-  cursor: pointer;
-  color: #E0E0E0;
-  text-shadow: 0 1px 0 #796992;
-}
 
 .categoriesContainer {
   width: fit-content;
@@ -54,14 +56,15 @@
 }
 
 .categoryContainer {
-  width: 100px;
+  width: fit-content;
+  min-width: 100px;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
 
-  i {
+  i, img {
     transition: all .4s;
-    border: 3px solid white;
+    border: 3px solid transparent;
     border-radius: 50%;
   }
 
@@ -69,23 +72,43 @@
     color: white;
     margin: 8px 0;
   }
+
+  .categoryName {
+    border-radius: 4px;
+    border: 2px solid white;
+    margin: 1.5em 0.5em 0 0.5em;
+    padding: 2px 4px;
+  }
 }
 
-.categoryContainer:hover i {
-  border-color: var(--nav);
+//.category > i:hover, .category > img:hover {
+//  border-color: rgba( 249, 46, 103, 0.9 );
+//  align-self: auto;
+//  padding: 15%;
+//}
+.isActive:hover {
+  border-color: rgba( 249, 46, 103, 0.9 );
   align-self: auto;
   padding: 15%;
+  cursor: pointer;
 }
 
 .category {
   margin: 0.5em auto;
+  min-width: 60px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
   /*border: 2px solid rgba(var(--navBorder), 0.8);*/
 
   /*background-image: linear-gradient(180deg, #a2d2ff, #bde0fe 24%, #ffafcc);*/
-  background-color: white;
+  background: rgba( 12, 0, 255, 0.5 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.2 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,10 +117,20 @@
 }
 
 .category > svg, .category > i {
-  width: 30px !important;
-  height: 30px !important;
-  color: var(--nav);
+  width: 50px !important;
+  min-width: 50px !important;
+  height: 50px !important;
+  color: white;
   font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category > img {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
 }
 
 
