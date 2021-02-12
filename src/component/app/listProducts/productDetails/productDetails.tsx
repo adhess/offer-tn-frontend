@@ -18,7 +18,6 @@ class ProductDetails extends React.Component<any, any> {
 
     componentDidMount() {
         this.getProduct();
-        console.log('fuck you');
     }
 
     componentDidUpdate(prevProps: any) {
@@ -52,8 +51,8 @@ class ProductDetails extends React.Component<any, any> {
                     <h4>Recorded Prices</h4>
                     {this.state?.series?.length > 0 ? <RecordedPricesChart series={this.state.series}/> : null}
                     <h4>Vendors</h4>
-                    {this.state.productVendorDetails?.map(detail =>
-                        <div className={['shadow', styles.vendor].join(' ')}
+                    {this.state.productVendorDetails?.map((detail, index) =>
+                        <div className={['shadow', styles.vendor].join(' ')} key={index}
                              onClick={() => window.open(detail.product_url, "_blank")}>
                             <img src={detail.vendor.logo_url} alt=''/>
                             <div>{detail.warranty} of warranty</div>
@@ -71,15 +70,12 @@ class ProductDetails extends React.Component<any, any> {
         const product_id = this.props?.match?.params?.product_id;
         const url = '/api/products/' + product_id + '/';
         axios.get(url).then(res => {
-            console.log('what the heck !! ', res);
             this.setState({
                 product: res.data,
                 series: [],
                 productVendorDetails: []
             });
-            res.data.details.map((id: number) => {
-                this.getProductVendorDetails(id);
-            })
+            res.data.details.map((id: number) => this.getProductVendorDetails(id));
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);
     }

@@ -53,38 +53,38 @@ export default function OrderProducts(props: any) {
     } = {
         'Price': [
             <Tooltip title={'Cheap'}>
-                <img src="https://img.icons8.com/ultraviolet/35/000000/cheap-2.png"/>
+                <img src="https://img.icons8.com/ultraviolet/35/000000/cheap-2.png" alt=''/>
             </Tooltip>,
             <IconButton onClick={props.onToggleIsAscending}
                         style={{color: 'var(--cherry)'}}>
                 <ArrowRightAltIcon/>
             </IconButton>,
             <Tooltip title={'Expensive'}>
-                <img src="https://img.icons8.com/ultraviolet/35/000000/expensive-2--v1.png"/>
+                <img src="https://img.icons8.com/ultraviolet/35/000000/expensive-2--v1.png" alt=''/>
             </Tooltip>,
         ],
         'Name': [
             <Tooltip title={'A'}>
-                <img src="https://img.icons8.com/color/35/000000/a-key.png"/>
+                <img src="https://img.icons8.com/color/35/000000/a-key.png" alt=''/>
             </Tooltip>,
             <IconButton onClick={props.onToggleIsAscending}
                         style={{color: 'var(--cherry)'}}>
                 <ArrowRightAltIcon/>
             </IconButton>,
             <Tooltip title={'Z'}>
-                <img src="https://img.icons8.com/color/35/000000/z-key.png"/>
+                <img src="https://img.icons8.com/color/35/000000/z-key.png" alt=''/>
             </Tooltip>,
         ],
         'Popularity': [
             <Tooltip title={'Less Popular'}>
-                <img src="https://img.icons8.com/color/35/000000/half-heart--v2.png"/>
+                <img src="https://img.icons8.com/color/35/000000/half-heart--v2.png" alt=''/>
             </Tooltip>,
             <IconButton onClick={props.onToggleIsAscending}
                         style={{color: 'var(--cherry)'}}>
                 <ArrowRightAltIcon/>
             </IconButton>,
             <Tooltip title={'Popular'}>
-                <img src="https://img.icons8.com/officel/35/000000/filled-like.png"/>
+                <img src="https://img.icons8.com/officel/35/000000/filled-like.png" alt=''/>
             </Tooltip>,
         ]
     }
