@@ -1,22 +1,13 @@
 import React, {Component} from 'react';
-import styles from './home.module.scss';
+import styles from './popular_products.module.scss';
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
-import Header from "./header/header";
-import Popular_products from "./popular_products/popular_products";
-import Features from "./features/features";
-import Support from "./support/support";
 
-class Home extends Component<any, any> {
+class Popular_products extends Component<any, any> {
     state = {}
 
     render() {
-        return <div className={styles.container}>
-            <Header/>
-            <Popular_products/>
-            <Features/>
-            <Support/>
-        </div>;
+        return <div className={styles.container}>Popular_products page</div>;
     }
 
 }
@@ -34,4 +25,4 @@ const mapStateToProp = (state: any) => {
         activeFilter: state.activeFilter
     }
 }
-export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Home));
+export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Popular_products));
