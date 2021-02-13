@@ -90,7 +90,6 @@ class Filter extends Component<any, any> {
     }
 
     private onSpecSelected(specName: string, choiceName: string) {
-        console.log('this.props', this.props);
         let checked_specs = {...this.props.activeFilter.checked_specs};
         let items = [];
         if (checked_specs[specName] !== undefined) {

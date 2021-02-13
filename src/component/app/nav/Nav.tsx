@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from '@material-ui/icons/Search';
-import logo from '../../../assets/images/logo.png'
 import Box from '@material-ui/core/Box';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";

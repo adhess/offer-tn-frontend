@@ -9,7 +9,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Ultrabook from "../../../assets/images/Ultrabook.png"
 import macbook from "../../../assets/images/macbook.png"
 import gamingLaptop from "../../../assets/images/gamingLaptop.png"
-import viewAll from "../../../assets/images/viewAll.png"
 import laptop from "../../../assets/images/laptop.png"
 
 class Categories extends Component<any, any> {
@@ -131,7 +130,6 @@ class Categories extends Component<any, any> {
             e.preventDefault();
             // variant could be success, error, warning, info, or default
             this.props.enqueueSnackbar('Not implemented yet!', {variant: 'info'});
-            console.log(this.props);
         }
     }
 }
