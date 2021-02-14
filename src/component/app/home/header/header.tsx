@@ -13,7 +13,7 @@ class Header extends Component<any, any> {
             <img className={styles.headerImg} src={header} alt=""/>
             <div className={styles.center_section}>
                 <div className={styles.description}>
-                    <h1>Welcome to your trustful product comparator.</h1>
+                    <h1>Welcome to your trustful products comparator.</h1>
                     <div className={styles.title}>
                         <h3>With</h3>
                         <h3>offer<span>.tn</span></h3>
