@@ -1,6 +1,39 @@
 .container {
   margin: 0;
-  padding: 0;
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  height: fit-content;
+  z-index: 2;
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #37435a;
+  margin: 0 auto;
+
+  h2, h3 {
+    margin: 7px;
+  }
+
+  > h3 {
+    color: #828282;
+  }
+}
+
+.line {
+  width: 25px;
+  height: 2px;
+  background-color: var(--cherry);
+}
+
+.products {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 3em auto;
 }
