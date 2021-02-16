@@ -6,7 +6,7 @@ import ListProducts from "./listProducts/ListProducts";
 import {BrowserRouter, Route} from 'react-router-dom';
 import DetailsProduct from "./listProducts/productDetails/productDetails";
 import Filter from "./listProducts/filter/filter";
-import { SnackbarProvider } from 'notistack';
+import {SnackbarProvider} from 'notistack';
 import Home from "./home/home";
 
 
@@ -20,12 +20,21 @@ class App extends React.Component {
                         <div className='app-container'>
                             <Categories/>
                             {/*<Adds/>*/}
-                            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
-                                <Route path={['/product/list/:category/:category_id']} exact component={Filter}/>
-                                <Route path={['/product/list/:category/:category_id']} exact component={ListProducts}/>
-                                <Route path={['/']} exact component={Home}/>
-                            </div>
-                            <Route path='/product/details/:product_id' exact component={DetailsProduct}/>
+                            <Route path={['/']} exact component={Home}/>
+                            <Route path={['/product/list/:category/:category_id', '/product/details/:product_id']} exact
+                                   children={<div>
+                                       <div style={{marginTop: '75px', width: '100%'}}>
+                                           <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                                               <Route path={['/product/list/:category/:category_id']} exact
+                                                      component={Filter}/>
+                                               <Route path={['/product/list/:category/:category_id']} exact
+                                                      component={ListProducts}/>
+                                           </div>
+                                           <Route path='/product/details/:product_id' exact component={DetailsProduct}/>
+                                       </div>
+                                   </div>}/>
+
+
                         </div>
                     </div>
                 </BrowserRouter>

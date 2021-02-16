@@ -14,7 +14,7 @@ class Header extends Component<any, any> {
             <div className={styles.center_section}>
                 <div className={styles.description}>
                     <h2>Welcome to your trustful products comparator</h2>
-                    <h4>Don't spend more than what you should</h4>
+                    <h4>Don't spend more than you need to</h4>
                 </div>
                 <img className={styles.heroImg} src={hero} alt=""/>
             </div>
