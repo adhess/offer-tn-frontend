@@ -10,6 +10,7 @@ import Ultrabook from "../../../assets/images/Ultrabook.png"
 import macbook from "../../../assets/images/macbook.png"
 import gamingLaptop from "../../../assets/images/gamingLaptop.png"
 import laptop from "../../../assets/images/laptop.png"
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 class Categories extends Component<any, any> {
     state = {
@@ -21,6 +22,15 @@ class Categories extends Component<any, any> {
         stepCategories: [[]]
     };
     subCategory: any;
+    private handleClickAway(event:any) {
+        const target = event.target;
+        const button = document.getElementById('show_categories_button_id');
+        const button2 = document.getElementById('show_categories_button_id_smDown');
+
+        if ((!button?.contains(target) && !button2?.contains(target)) && this.props.is_show_category) {
+            this.props.toggle_is_show_categories();
+        }
+    }
 
 
     componentDidMount() {
@@ -53,57 +63,65 @@ class Categories extends Component<any, any> {
                                 }
                             </div>
                         </Tooltip>
+                        <h4 className={styles.categoryName}>{name}</h4>
                     </>
                 )
             }
 
         ;
         return (
-            <Collapse in={this.props.is_show_category} className={styles.collapse}>
-                <div className={styles.paper}>
-                    <div className={styles.container}>
-                        {
-                            this.state.stepCategories.length > 1 ?
-                                <div className={styles.categoryContainer}
-                                     onClick={() => this.setState((state: any) =>
-                                         ({stepCategories: [...state.stepCategories].slice(0, state.stepCategories.length - 1)}))}>
-                                    {categoryComponent('fas fa-arrow-left', 'Go Back', true)}
-                                </div>
-                                : null
-                        }
-                        {
-                            this.state.stepCategories[this.state.stepCategories.length - 1].map((category: any) => (
-                                category?.children?.length > 0 ?
+            <ClickAwayListener onClickAway={this.handleClickAway.bind(this)}
+                               touchEvent="onTouchEnd"
+                               mouseEvent="onMouseDown">
+                <Collapse  in={this.props.is_show_category} className={styles.collapse}>
+                    <div className={styles.paper}>
+                        <div className={styles.container}>
+                            {
+                                this.state.stepCategories.length > 1 ?
                                     <div className={styles.categoryContainer}
-                                         key={category.name}
-                                         onClick={(e) => this.onSelectCategory(category.name, category.isActive, e)}>
-                                        {categoryComponent(category.icon, category.name, category.isActive)}
-                                    </div> :
-                                    <NavLink to={'/product/list/' + category.name + '/' + category.id}
-                                             className={styles.categoryContainer}
+                                         onClick={() => this.setState((state: any) =>
+                                             ({stepCategories: [...state.stepCategories].slice(0, state.stepCategories.length - 1)}))}>
+                                        {categoryComponent('fas fa-arrow-left', 'Go Back', true)}
+                                    </div>
+                                    : null
+                            }
+                            {
+                                this.state.stepCategories[this.state.stepCategories.length - 1].map((category: any) => (
+                                    category?.children?.length > 0 ?
+                                        <div className={styles.categoryContainer}
                                              key={category.name}
-                                             onClick={(e) => {
-                                                 this.onSelectCategory(category.name, category.isActive, e);
-                                                 // this.props.update_filter({checkbox_choices:[], price_range: []});
-                                             }}>
-                                        {categoryComponent(category.icon, category.name, category.isActive)}
+                                             onClick={(e) => this.onSelectCategory(category.name, category.isActive, e)}>
+                                            {categoryComponent(category.icon, category.name, category.isActive)}
+                                        </div> :
+                                        <NavLink to={'/product/list/' + category.name + '/' + category.id}
+                                                 className={styles.categoryContainer}
+                                                 key={category.name}
+                                                 onClick={(e) => {
+                                                     this.onSelectCategory(category.name, category.isActive, e);
+                                                     // this.props.update_filter({checkbox_choices:[], price_range: []});
+                                                 }}>
+                                            {categoryComponent(category.icon, category.name, category.isActive)}
+                                        </NavLink>
+                                ))
+                            }
+                            {
+                                this.state.stepCategories.length > 1 ?
+                                    <NavLink
+                                        to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
+                                        className={styles.categoryContainer}
+                                        key={'View All'}
+                                        onClick={(e) => {
+                                            this.onSelectCategory(undefined, true, e);
+                                        }}>
+                                        {categoryComponent('fas fa-globe', 'View All', true)}
                                     </NavLink>
-                            ))
-                        }
-                        {
-                            this.state.stepCategories.length > 1 ?
-                                <NavLink
-                                    to={'/product/list/' + this.state.selectedCategory?.name + '/' + this.state.selectedCategory?.id}
-                                    className={styles.categoryContainer}
-                                    key={'View All'}>
-                                    {categoryComponent('fas fa-globe', 'View All', true)}
-                                </NavLink>
-                                : null
-                        }
+                                    : null
+                            }
 
+                        </div>
                     </div>
-                </div>
-            </Collapse>
+                </Collapse>
+            </ClickAwayListener>
         );
     }
 
@@ -122,7 +140,6 @@ class Categories extends Component<any, any> {
                         ]
                     })
                 );
-                // this.props.toggle_is_show_categories();
             } else {
                 this.props.toggle_is_show_categories();
             }

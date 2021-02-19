@@ -5,7 +5,7 @@ import {withRouter} from "react-router";
 import axios from "axios";
 import Product from "../../listProducts/product/Product";
 
-class Popular_products extends Component<any, any> {
+class PopularProducts extends Component<any, any> {
     state = {products: []}
     componentDidMount() {
         this.getProducts();
@@ -22,7 +22,7 @@ class Popular_products extends Component<any, any> {
             <div className={styles.products}>
                 {
                     this.state.products?.slice(0, 2 * Math.floor((window.innerWidth - 32-16) / 276)).map((p: any, index: number) =>
-                        <Product data={p}/>
+                        <Product data={p} key={index}/>
                     )
                 }
             </div>
@@ -42,7 +42,6 @@ class Popular_products extends Component<any, any> {
                 products: res.data.results,
                 isLoadingProducts: false
             }));
-            console.log(res.data.results);
             this.props.sub_async_action();
         }).catch(this.props.sub_async_action);
     }
@@ -62,4 +61,4 @@ const mapStateToProp = (state: any) => {
         activeFilter: state.activeFilter
     }
 }
-export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Popular_products));
+export default connect(mapStateToProp, mapDispatchToProps)(withRouter(PopularProducts));

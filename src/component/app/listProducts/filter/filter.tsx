@@ -15,7 +15,7 @@ class Filter extends Component<any, any> {
             this.state.specs?.length > 0 ||
             (this.state.price_range?.length === 2 && this.state.price_range[0]) !== this.state.price_range[1]
         ) ? null :
-            <div className={[styles.container, 'shadow'].join(' ')}>
+            <div className={styles.container}>
                 <h3>Filter By:</h3>
                 {
                     this.props.location?.search === '' ? null :

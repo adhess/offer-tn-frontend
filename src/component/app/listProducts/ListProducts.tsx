@@ -7,6 +7,9 @@ import {connect} from "react-redux";
 import OrderProducts from "./orderProducts/orderProducts";
 import InfiniteScroll from 'react-infinite-scroller';
 import {Skeleton} from "@material-ui/lab";
+import Filter from "./filter/filter";
+import {Drawer} from "@material-ui/core";
+import PersistentDrawerLeft from "./drawer/drawer";
 
 class ListProducts extends Component<any, any> {
     state: {
@@ -34,56 +37,64 @@ class ListProducts extends Component<any, any> {
     }
 
     render() {
-        function getLoadingProducts() {
-            const ans = [];
-            let nb = Math.floor((window.innerWidth - 32) / 278);
-            for (let i = 0; i < nb; i++) {
-                ans.push(
-                    <div className={['shadow', styles.item].join(' ')}>
-                        <Skeleton variant="rect" width={230} height={230}/>
-                        <Skeleton/>
-                        <div className={styles.skeletonPrice}>
-                            <Skeleton variant="rect" width={100} height={30}/>
-                            <Skeleton variant="rect" width={100} height={30}/>
-                        </div>
+        const view: any[] = [];
+        view.push(this.getFilterDrawer());
+        if (!this.state.isLoadingProducts && (!this.state.products || this.state.products.length === 0)) {
+            view.push(<div className={styles.noProduct} key={1}><p>&#9785;</p><h4>No Product</h4><h3>Found</h3></div>);
+        } else if (this.state.isLoadingProducts && (!this.state.products || this.state.products.length === 0)) {
+            view.push(this.getLoadingProducts(true));
+        } else {
+            view.push(<div key={3} className={[styles.order_list_products,
+                this.props.is_drawer_open && window.innerWidth >= 960 ? styles.drawerOpened : undefined].join(' ')
+            }>
+                <OrderProducts isAscending={this.state.isAscending}
+                               orderBy={this.state.orderBy}
+                               onOrderByChange={this.onOrderByChange.bind(this)}
+                               onToggleIsAscending={this.onToggleIsAscending.bind(this)}/>
+                <InfiniteScroll pageStart={0} loadMore={this.loadMoreData} hasMore={this.state.hasMoreData}
+                                loader={<div className="loader" key={0}>{this.getLoadingProducts(false)}</div>}>
+                    <div className={styles.container}>
+                        {
+                            (this.state.products || []).map((product: ProductType,
+                                                             index: number) => <Product data={product} key={index}/>)
+                        }
                     </div>
-                )
-            }
-            return <div className={styles.container} style={{margin: '0 auto'}}>{ans}</div>;
+                </InfiniteScroll>
+            </div>)
         }
+        return view;
+    }
 
-        return (
-            this.state.isLoadingProducts ? getLoadingProducts() :
-                !this.state.products || this.state.products.length === 0 ?
-                    <div className={styles.noProduct}>
-                        <p>&#9785;</p>
-                        <h4>No Product</h4>
-                        <h3>Found</h3>
+    private getFilterDrawer() {
+        if (window.innerWidth < 960) {
+            return <Drawer variant="temporary" open={this.props.is_drawer_open} key={0}
+                           onClose={this.props.toggle_is_drawer_open} ModalProps={{keepMounted: true}}>
+                <Filter/>
+            </Drawer>
+        }
+        return <PersistentDrawerLeft key={4}/>;
+    }
+
+    private getLoadingProducts(isFirstLoad: boolean) {
+        const ans = [];
+        let nb = Math.floor((window.innerWidth - 32) / 278);
+        if (this.props.is_drawer_open && window.innerWidth >= 960) {
+            nb--;
+        }
+        for (let i = 0; i < nb; i++) {
+            ans.push(
+                <div className={['shadow', styles.item].join(' ')} key={i}>
+                    <Skeleton variant="rect" width={230} height={230}/>
+                    <Skeleton/>
+                    <div className={styles.skeletonPrice}>
+                        <Skeleton variant="rect" width={100} height={30}/>
+                        <Skeleton variant="rect" width={100} height={30}/>
                     </div>
-                    :
-                    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                        <OrderProducts
-                            isAscending={this.state.isAscending}
-                            orderBy={this.state.orderBy}
-                            onOrderByChange={this.onOrderByChange.bind(this)}
-                            onToggleIsAscending={this.onToggleIsAscending.bind(this)}/>
-                        <InfiniteScroll
-                            pageStart={0}
-                            loadMore={this.loadMoreData}
-                            hasMore={this.state.hasMoreData}
-                            loader={<div className="loader" key={0}>Loading ...</div>}
-                        >
-                            <div className={styles.container}>
-                                {
-                                    (this.state.products || []).map(
-                                        (product: ProductType, index: number) => <Product data={product} key={index}/>)
-                                }
-                            </div>
-                        </InfiniteScroll>
-
-                    </div>
-
-        );
+                </div>
+            )
+        }
+        return <div key={2} className={[styles.container,
+            isFirstLoad && this.props.is_drawer_open && window.innerWidth >= 960 ? styles.drawerOpened : undefined].join(' ')}>{ans}</div>;
     }
 
     private onOrderByChange(name: string) {
@@ -163,11 +174,18 @@ class ListProducts extends Component<any, any> {
     }
 }
 
+const mapStateToProp = (state: any) => {
+    return {
+        is_drawer_open: state.is_drawer_open
+    }
+}
+
 const mapDispatchToProps = (dispatch: (arg0: any) => any) => {
     return {
         add_async_action: () => dispatch({type: 'ADD_ASYNC_ACTION'}),
         sub_async_action: () => dispatch({type: 'SUB_ASYNC_ACTION'}),
+        toggle_is_drawer_open: () => dispatch({type: 'TOGGLE_DRAWER'}),
     }
 }
 
-export default connect(null, mapDispatchToProps)(ListProducts);
+export default connect(mapStateToProp, mapDispatchToProps)(ListProducts);

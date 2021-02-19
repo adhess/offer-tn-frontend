@@ -3,7 +3,7 @@ import styles from './home.module.scss';
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import Header from "./header/header";
-import Popular_products from "./popular_products/popular_products";
+import PopularProducts from "./popular_products/popular_products";
 import Features from "./features/features";
 import Support from "./support/support";
 
@@ -13,7 +13,7 @@ class Home extends Component<any, any> {
     render() {
         return <div className={styles.container}>
             <Header/>
-            <Popular_products/>
+            <PopularProducts/>
             <Features/>
             <Support/>
         </div>;

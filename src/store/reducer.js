@@ -1,6 +1,7 @@
 const initialState = {
     async_counter: 0,
     is_show_category: false,
+    is_drawer_open: false,
     activeFilter: {
         checked_specs: [],
         price_range: []
@@ -27,6 +28,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 is_show_category: !state.is_show_category
+            }
+        case 'TOGGLE_DRAWER':
+            return {
+                ...state,
+                is_drawer_open: !state.is_drawer_open
             }
         default:
             return state;
