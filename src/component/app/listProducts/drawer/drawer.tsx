@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         drawerPaper: {
             width: drawerWidth,
-            marginTop: 53,
+            marginTop: 55,
             boxShadow:'0 10px 40px -10px rgba(0, 64, 128, .1)'
         },
         drawerHeader: {
