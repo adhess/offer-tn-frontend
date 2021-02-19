@@ -1,13 +1,17 @@
 .link {
   text-decoration: none;
-  @media only screen and (max-width: 549px) {
-    display: none;
-  }
+  >img {
+    width: 32px;
+    margin: 6px 6px 0 6px;
 
+    @media only screen and (min-width: 560px) {
+      display: none;
+    }
+  }
   >div {
     display: flex;
     flex-direction: row;
-    margin: 7px 1em 0 1em;
+    margin: 0px 1em 0 1em;
     border: 2px solid transparent;
     border-radius: 4px;
     padding: 0 3px;
@@ -19,6 +23,9 @@
     &:hover {
       border: 2px solid #eaeaea;
     }
+    @media only screen and (max-width: 559px) {
+      display: none;
+    }
   }
 
 }
@@ -26,12 +33,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
+  max-width: 100%;
   height: fit-content;
   top: 0;
   position: fixed;
   background: var(--nav);
-  z-index: 999;
+  z-index: 1200;
 
   background: rgba( 12, 0, 255, 0.5 );
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.2 );
@@ -43,35 +51,42 @@
 .box {
   //border-bottom: 2px solid rgba(var(--navBorder), 0.8);
   width: 100%;
-  min-height: 55px;
   display: flex;
   flex-direction: row;
-  flex-flow: wrap;
 }
 
 .searchText {
   border-radius: 6px;
   background-color: white;
-  width: 332px;
+  width: 100%;
+  max-width: 332px;
   height: 40px;
-  @media only screen and (max-width: 549px) {
-    width: 200px;
-  }
 }
 
 .searchAction {
-  margin: auto !important;
+  width: fit-content;
   display: flex;
   flex-direction: row;
 
+  >:nth-child(2) {
+    margin: 2px 0 6px 0;
+  }
+  @media only screen and (max-width: 599px) {
+    margin-left: 6px;
+  }
+  @media only screen and (min-width: 600px) {
+    margin: auto !important;
+  }
   .categoriesButton {
     background: white;
-    margin: 8px 1em;
+    margin: 2px 6px;
+    width: 170px;
     height: 40px;
     border: 2px solid #eaeaea;
-    @media only screen and (max-width: 549px) {
+    @media only screen and (max-width: 959px) {
       width: 40px;
     }
+
   }
 
   .categoriesButton:hover {
@@ -82,4 +97,15 @@
 .logo {
   height: 35px;
   margin: 10px 0 auto 10px;
+}
+
+.filterImg {
+  width: 32px;
+  background-color: rgba(255,255,255,0.8);
+  border-radius: 50%;
+}
+
+.filter_button {
+  width: 43px;
+  height: 43px;
 }

@@ -46,3 +46,16 @@
     justify-content: space-between;
     margin-top: 6px;
 }
+
+.order_list_products {
+    width: 100%;
+    transition: all 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawerOpened {
+    width: calc(100% - 333px);
+    margin-left: 333px;
+}
+
