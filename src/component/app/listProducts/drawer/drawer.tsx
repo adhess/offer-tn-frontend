@@ -63,7 +63,7 @@ function PersistentDrawerLeft(props: any) {
                 variant="persistent"
                 anchor="left"
                 open={props.is_drawer_open}
-                onClose={props.toggle_is_drawer_open()}
+                onClose={props.toggle_is_drawer_open}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
