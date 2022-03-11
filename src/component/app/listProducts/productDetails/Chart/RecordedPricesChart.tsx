@@ -1,7 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import styles from "./RecordedPricesChart.module.scss";
-import {ApexOptions} from "apexcharts";
 
 export default class RecordedPricesChart extends React.Component<any, any> {
     state = {
@@ -22,7 +21,7 @@ export default class RecordedPricesChart extends React.Component<any, any> {
         return (
             <div className={['shadow', styles.border].join(' ')}>
                 <Chart
-                    options={this.state.options as ApexOptions}
+                    options={this.state.options}
                     series={this.props.series}
                     type="line"
                     width="100%"
