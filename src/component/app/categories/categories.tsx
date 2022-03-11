@@ -90,17 +90,17 @@ class Categories extends Component<any, any> {
                                     category?.children?.length > 0 ?
                                         <div className={styles.categoryContainer}
                                              key={category.name}
-                                             onClick={(e) => this.onSelectCategory(category.name, category.is_active, e)}>
-                                            {categoryComponent(category.icon, category.name, category.is_active)}
+                                             onClick={(e) => this.onSelectCategory(category.name, category.isActive, e)}>
+                                            {categoryComponent(category.icon, category.name, category.isActive)}
                                         </div> :
                                         <NavLink to={'/product/list/' + category.name + '/' + category.id}
                                                  className={styles.categoryContainer}
                                                  key={category.name}
                                                  onClick={(e) => {
-                                                     this.onSelectCategory(category.name, category.is_active, e);
+                                                     this.onSelectCategory(category.name, category.isActive, e);
                                                      // this.props.update_filter({checkbox_choices:[], price_range: []});
                                                  }}>
-                                            {categoryComponent(category.icon, category.name, category.is_active)}
+                                            {categoryComponent(category.icon, category.name, category.isActive)}
                                         </NavLink>
                                 ))
                             }
